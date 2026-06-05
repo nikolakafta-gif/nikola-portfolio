@@ -1,0 +1,303 @@
+/* ==========================================================================
+   Fluid Scaling System
+   Viewport-based scaling — all em values scale automatically.
+   ========================================================================== */
+
+/* Desktop */
+:root {
+  --size-unit: 16;
+  --size-container-ideal: 1272;
+  --size-container-min: 992px;
+  --size-container-max: 1440px;
+  --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
+  --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
+  --container-padding: 3.25em;
+}
+
+/* Tablet */
+@media screen and (max-width: 991px) {
+  :root {
+    --size-container-ideal: 834;
+    --size-container-min: 768px;
+    --size-container-max: 991px;
+    --container-padding: 1.5em;
+  }
+}
+
+/* Mobile Landscape */
+@media screen and (max-width: 767px) {
+  :root {
+    --size-container-ideal: 550;
+    --size-container-min: 480px;
+    --size-container-max: 767px;
+    --container-padding: 1em;
+  }
+}
+
+/* Mobile Portrait */
+@media screen and (max-width: 479px) {
+  :root {
+    --size-container-ideal: 390;
+    --size-container-min: 320px;
+    --size-container-max: 479px;
+    --container-padding: 1em;
+  }
+}
+
+/* ==========================================================================
+   Design Tokens
+   ========================================================================== */
+
+:root {
+  /* Colors */
+  --color-primary: #1b1d1e;
+  --color-primary-60: #1b1d1e99;
+  --color-primary-40: #1b1d1e66;
+  --color-primary-10: #1b1d1e1a;
+  --color-primary-05: #1b1d1e0d;
+  --color-primary-30: #1b1d1e4d;
+  --color-white: #ffffff;
+  --color-white-60: #fff9;
+  --color-white-10: #ffffff1a;
+  --color-accent: #4928fd;
+  --color-accent-20: #4928fd33;
+
+  /* Typography */
+  --font-heading: "Instrument Serif", serif;
+  --font-body: "Inter Tight", sans-serif;
+
+  /* Font sizes */
+  --text-h1: 8.125em;    /* 130px */
+  --text-h2: 4.5em;      /* 72px */
+  --text-h3: 3em;        /* 48px */
+  --text-h4: 2em;        /* 32px */
+  --text-h5: 1.5em;      /* 24px */
+  --text-h6: 1.25em;     /* 20px */
+  --text-body: 1em;      /* 16px */
+  --text-small: 0.875em; /* 14px */
+
+  /* Spacing scale */
+  --spacing-xs: 0.25em;    /* 4px */
+  --spacing-sm: 0.5em;     /* 8px */
+  --spacing-md: 1em;       /* 16px */
+  --spacing-lg: 1.5em;     /* 24px */
+  --spacing-xl: 2em;       /* 32px */
+  --spacing-2xl: 2.5em;    /* 40px */
+  --spacing-3xl: 3em;      /* 48px */
+  --spacing-4xl: 4em;      /* 64px */
+  --spacing-5xl: 5em;      /* 80px */
+  --spacing-section: 6.25em; /* 100px */
+
+  /* Border radius */
+  --radius-sm: 0.25em;     /* 4px */
+  --radius-md: 0.75em;     /* 12px */
+  --radius-lg: 1em;        /* 16px */
+  --radius-xl: 1.5em;      /* 24px */
+  --radius-pill: 62.5em;   /* 999px */
+
+  /* Shadows */
+  --shadow-card: 0 8px 32px #0000001f;
+  --shadow-soft: 0 8px 50px #0000000d;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-smooth: 400ms ease;
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Curtain reveal */
+[data-curtain] {
+  position: relative;
+  overflow: hidden;
+}
+
+.curtain {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.curtain__panel {
+  flex: 1;
+  background-color: var(--color-white);
+  transform-origin: left center;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--size-font);
+  color: var(--color-primary);
+  background-color: var(--color-white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.2;
+  overflow-wrap: break-word;
+}
+
+p {
+  overflow-wrap: break-word;
+}
+
+/* ==========================================================================
+   Base Utilities
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--size-container);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  width: fit-content;
+  padding: 0.75em 1.25em;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 400;
+  line-height: 1.5;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: opacity var(--transition-base);
+}
+
+.btn:hover {
+  opacity: 0.85;
+}
+
+.btn__icon {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+/* ==========================================================================
+   Focus & Accessibility
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.sr-only:focus {
+  position: fixed;
+  top: 0.5em;
+  left: 0.5em;
+  z-index: 9999;
+  width: auto;
+  height: auto;
+  padding: 0.75em 1.5em;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+}

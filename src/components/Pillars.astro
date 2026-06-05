@@ -1,0 +1,162 @@
+---
+const stats = [
+  { count: "5", label: "Total Projects Completed" },
+  { count: "1", label: "Years of Experience" },
+  { count: "3", label: "Happy Clients" },
+];
+---
+
+<section class="pillars" id="about">
+  <div class="pillars__inner container">
+    <div class="pillars__content">
+      <div class="pillars__heading-block">
+        <h2 class="pillars__heading" data-fade-up>Focused on clean builds with Client-first naming classes, strong foundations, and seamless interactions that feel intentional.</h2>
+      </div>
+
+      <div class="pillars__stats" data-stagger>
+        {stats.map((stat, i) => (
+          <div class="pillars__stat-wrapper">
+            <div class="pillars__stat">
+              <div class="pillars__stat-count">
+                <span class="pillars__plus">+</span>
+                <span class="pillars__number">{stat.count}</span>
+              </div>
+              <p class="pillars__stat-label">{stat.label}</p>
+            </div>
+            {i < stats.length - 1 && <div class="pillars__divider"></div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pillars {
+    padding-top: 10em;
+    padding-bottom: 0;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .pillars__inner {
+    max-width: 1272px;
+  }
+
+  .pillars__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4em;
+  }
+
+  .pillars__heading {
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .pillars__stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+    width: 100%;
+  }
+
+  .pillars__stat-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  .pillars__stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625em;
+    width: 100%;
+    padding: 2em 0.625em;
+  }
+
+  .pillars__stat-count {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .pillars__plus {
+    color: var(--color-primary);
+    font-size: 5em;
+    line-height: 0.3;
+    margin: 0;
+  }
+
+  .pillars__number {
+    color: var(--color-primary);
+    font-size: 8.125em;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .pillars__stat-label {
+    color: var(--color-primary-60);
+    font-size: 1em;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .pillars__divider {
+    background-color: var(--color-primary-10);
+    width: 1px;
+    height: 60%;
+    margin: auto 0;
+  }
+
+  @media (max-width: 991px) {
+    .pillars {
+      padding-top: 2.5em;
+    }
+
+    .pillars__heading {
+      font-size: 2.25em;
+    }
+
+    .pillars__number {
+      font-size: 4.5em;
+    }
+
+    .pillars__plus {
+      font-size: 3.75em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .pillars {
+      padding-top: 0;
+    }
+
+    .pillars__content {
+      gap: 3.125em;
+    }
+
+    .pillars__heading {
+      font-size: 2em;
+      margin-top: 3.125em;
+    }
+
+    .pillars__stats {
+      grid-template-columns: 1fr;
+      gap: 0.625em;
+    }
+
+    .pillars__divider {
+      display: none;
+    }
+
+    .pillars__stat {
+      padding: 1.25em 0.625em;
+    }
+  }
+</style>

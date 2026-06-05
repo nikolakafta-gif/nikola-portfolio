@@ -1,0 +1,217 @@
+---
+const faqs = [
+  {
+    question: "What services do you offer?",
+    answer: "I specialize in developing high-quality websites using AI-enhanced workflows and modern frameworks like Astro, including full site builds, redesigns, landing pages, and ongoing site optimization.",
+  },
+  {
+    question: "How long does a typical project take?",
+    answer: "A typical project takes 1 to 3 weeks. Smaller landing pages can be finished in a few days, while full multi-page websites with CMS, animations, and custom features usually require 2–3 weeks.",
+  },
+  {
+    question: "How much is the price of the website?",
+    answer: "Since every project is unique, the price varies depending on features, number of pages, animations, and overall goals. Once I understand your requirements, I'll send a detailed estimate.",
+  },
+  {
+    question: "Do you offer ongoing support after project completion?",
+    answer: "Absolutely. Every project includes <strong>30 days of free post-launch support</strong> for small adjustments, troubleshooting, and ensuring everything runs smoothly. Additional long-term support is also available if needed.",
+  },
+  {
+    question: "How often will I receive updates on my project?",
+    answer: "I keep you informed at every stage. You can expect progress updates <strong>several times per week</strong>, along with previews whenever important sections are finished.",
+  },
+  {
+    question: "How do I get started with you?",
+    answer: "Getting started is easy. Send me a short overview of your project, and I'll follow up with a few details I need. Once we define the scope, I'll prepare a proposal and timeline so we can begin.",
+  },
+];
+---
+
+<section class="faq" id="faq">
+  <div class="faq__inner container">
+    <div class="faq__header">
+      <h2 class="faq__heading" data-fade-up>Got questions? <br />I've got <span class="faq__italic">answers</span></h2>
+    </div>
+    <div class="faq__list" data-stagger>
+      {faqs.map((faq, i) => (
+        <div class="faq__item" data-faq-item>
+          <button class="faq__question" data-faq-toggle aria-expanded="false" type="button">
+            <svg class="faq__chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>{faq.question}</span>
+          </button>
+          <div class="faq__answer-wrap">
+            <div class="faq__answer" set:html={faq.answer} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function initFaq() {
+    document.querySelectorAll<HTMLElement>("[data-faq-item]").forEach((item) => {
+      if (item.dataset.faqBound) return;
+      item.dataset.faqBound = "true";
+
+      const toggle = item.querySelector<HTMLButtonElement>("[data-faq-toggle]");
+      if (!toggle) return;
+
+      toggle.addEventListener("click", () => {
+        const isOpen = item.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", String(isOpen));
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initFaq);
+  } else {
+    initFaq();
+  }
+  document.addEventListener("astro:page-load", initFaq);
+</script>
+
+<style>
+  .faq {
+    padding-top: 8.75em;
+    padding-bottom: 0;
+  }
+
+  .faq__inner {
+    max-width: 1272px;
+  }
+
+  .faq__header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5em;
+  }
+
+  .faq__heading {
+    max-width: 476px;
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .faq__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: 925px;
+    margin: 0 auto;
+    line-height: 1.25;
+  }
+
+  .faq__item {
+    border: 1px solid var(--color-primary-10);
+    border-radius: 1em;
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 5em;
+    padding: 1.5em;
+    cursor: pointer;
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.2;
+    gap: 0.75em;
+    background: none;
+    border: none;
+    text-align: left;
+  }
+
+  .faq__question:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: -2px;
+    border-radius: 1em;
+  }
+
+  /* Chevron rotation */
+  .faq__chevron {
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq__item.is-open .faq__chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Smooth height via CSS grid trick */
+  .faq__answer-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq__item.is-open .faq__answer-wrap {
+    grid-template-rows: 1fr;
+  }
+
+  .faq__answer {
+    overflow: hidden;
+    padding: 0 1.5em 0;
+    color: var(--color-primary-60);
+    font-size: 1em;
+    line-height: 1.5;
+    transition: padding-bottom 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .faq__item.is-open .faq__answer {
+    padding-bottom: 2em;
+  }
+
+  @media (max-width: 991px) {
+    .faq {
+      padding-top: 2.5em;
+    }
+
+    .faq__header {
+      margin-bottom: 2.5em;
+    }
+
+    .faq__heading {
+      font-size: 2.25em;
+    }
+
+    .faq__question {
+      font-size: 1.375em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .faq {
+      padding-top: 3.75em;
+    }
+
+    .faq__question {
+      font-size: 1.25em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq__answer-wrap,
+    .faq__chevron {
+      transition: none;
+    }
+  }
+</style>

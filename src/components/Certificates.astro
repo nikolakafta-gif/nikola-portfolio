@@ -1,0 +1,163 @@
+---
+const certificates = [
+  { src: "/assets/images/cert-layouts-2.webp", alt: "Webflow Academy Layouts 2 Certificate" },
+  { src: "/assets/images/cert-layouts-1.webp", alt: "Webflow Academy Layouts 1 Certificate" },
+  { src: "/assets/images/cert-101.webp", alt: "Webflow Academy 101 Certificate" },
+];
+
+/* Quadruple the array so the track is always wider than the viewport */
+const marqueeItems = [...certificates, ...certificates, ...certificates, ...certificates];
+---
+
+<section class="certificates" id="certificates">
+  <div class="certificates__inner container">
+    <div class="certificates__content">
+      <h2 class="certificates__heading" data-fade-up>Certificates <span class="certificates__italic">webflow academy</span></h2>
+    </div>
+    <div class="certificates__marquee">
+      <div class="certificates__track">
+        {marqueeItems.map((cert) => (
+          <div class="certificates__card">
+            <img src={cert.src} alt={cert.alt} loading="lazy" class="certificates__image" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .certificates {
+    padding-top: 10em;
+    padding-bottom: 0;
+  }
+
+  .certificates__inner {
+    max-width: 1272px;
+  }
+
+  .certificates__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5em;
+  }
+
+  .certificates__heading {
+    max-width: 704px;
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .certificates__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  /* Marquee wrapper with fade edges */
+  .certificates__marquee {
+    position: relative;
+    overflow: hidden;
+    margin-top: 2.5em;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  /* Scrolling track */
+  .certificates__track {
+    display: flex;
+    gap: 1.5em;
+    width: max-content;
+    animation: marquee-scroll 20s linear infinite;
+  }
+
+  /* Card width + gap as CSS vars for clean keyframe calc */
+  .certificates__track {
+    --card-w: 18em;
+    --card-gap: 1.5em;
+    /* One set = 3 cards + 3 gaps (gap after each card, before the next set starts) */
+    --set-width: calc(3 * var(--card-w) + 3 * var(--card-gap));
+  }
+
+  @keyframes marquee-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-1 * var(--set-width)));
+    }
+  }
+
+  .certificates__card {
+    border-radius: 1em;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    flex-shrink: 0;
+    width: var(--card-w);
+  }
+
+  .certificates__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media (max-width: 991px) {
+    .certificates {
+      padding-top: 2.5em;
+    }
+
+    .certificates__heading {
+      font-size: 2.25em;
+    }
+
+    .certificates__track {
+      --card-w: 15em;
+      animation-duration: 16s;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .certificates {
+      padding-top: 3.75em;
+    }
+
+    .certificates__track {
+      --card-w: 13em;
+      animation-duration: 14s;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .certificates__track {
+      animation: none;
+    }
+
+    .certificates__marquee {
+      -webkit-mask-image: none;
+      mask-image: none;
+      overflow-x: auto;
+    }
+  }
+</style>

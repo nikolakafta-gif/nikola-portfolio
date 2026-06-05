@@ -1,0 +1,47 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "doorly",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d C:\\Users\\\"Nikola Miljkovic\"\\Desktop\\Doorly && npx astro dev --port 4322"],
+      "port": 4322
+    },
+    {
+      "name": "advisia",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["astro", "dev", "--port", "4325", "--root", "Advisia"],
+      "port": 4325
+    },
+    {
+      "name": "casera",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d C:\\Users\\\"Nikola Miljkovic\"\\Desktop\\Casera && npx astro dev --port 4323"],
+      "port": 4323
+    },
+    {
+      "name": "comira",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d C:\\Users\\\"Nikola Miljkovic\"\\Desktop\\comira && npx astro dev --port 4324"],
+      "port": 4324
+    },
+    {
+      "name": "mariana",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d C:\\Users\\\"Nikola Miljkovic\"\\Desktop\\\"Mariana Life Coach\" && npx astro dev --port 4326"],
+      "port": 4326
+    },
+    {
+      "name": "vistal",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d C:\\Users\\\"Nikola Miljkovic\"\\Desktop\\Vistal && npx astro dev --port 4327"],
+      "port": 4327
+    },
+    {
+      "name": "portfolio",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["astro", "dev", "--port", "4340"],
+      "port": 4340
+    }
+  ]
+}

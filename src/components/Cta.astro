@@ -1,0 +1,161 @@
+---
+import ButtonExpand from "./ButtonExpand.astro";
+---
+
+<section class="cta">
+  <div class="cta__inner container">
+    <div class="cta__card">
+      <div class="cta__content">
+        <h3 class="cta__title" data-fade-up>Innovative Solutions for <span class="cta__italic">bold brands</span></h3>
+        <p class="cta__text">Your brand deserves more than a website , it deserves an experience people remember.</p>
+        <ButtonExpand href="/contact" label="Let's craft together" variant="dark" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta {
+    padding-top: 5em;
+    padding-bottom: 2.5em;
+    position: relative;
+    z-index: 5;
+  }
+
+  .cta__inner {
+    max-width: 1272px;
+  }
+
+  .cta__card {
+    border: 2px solid rgba(27, 29, 30, 0.2);
+    background-color: #ffffff;
+    border-radius: 1.5em;
+    padding: 7.5em 3.75em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Animated gradient blobs */
+  .cta__card::before,
+  .cta__card::after {
+    content: "";
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Blue blob — left side */
+  .cta__card::before {
+    background: radial-gradient(circle, #a8d8f0 0%, rgba(168, 216, 240, 0) 70%);
+    bottom: -20%;
+    left: -10%;
+    animation: blob-blue 8s ease-in-out infinite alternate;
+  }
+
+  /* Orange blob — right side */
+  .cta__card::after {
+    background: radial-gradient(circle, #f5ddb8 0%, rgba(245, 221, 184, 0) 70%);
+    bottom: -20%;
+    right: -10%;
+    animation: blob-orange 8s ease-in-out infinite alternate;
+  }
+
+  @keyframes blob-blue {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(15%, -20%) scale(1.15);
+    }
+    66% {
+      transform: translate(-5%, 10%) scale(0.9);
+    }
+    100% {
+      transform: translate(10%, -10%) scale(1.1);
+    }
+  }
+
+  @keyframes blob-orange {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    33% {
+      transform: translate(-15%, -15%) scale(1.1);
+    }
+    66% {
+      transform: translate(5%, 15%) scale(0.95);
+    }
+    100% {
+      transform: translate(-10%, -5%) scale(1.15);
+    }
+  }
+
+  .cta__content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1032px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta__title {
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0 0 0.75em;
+  }
+
+  .cta__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .cta__text {
+    color: var(--color-primary-60);
+    font-size: 1em;
+    margin: 0 0 1.5em;
+  }
+
+  @media (max-width: 991px) {
+    .cta {
+      padding-top: 2.5em;
+    }
+
+    .cta__card {
+      padding: 5.625em 2.5em;
+    }
+
+    .cta__title {
+      font-size: 2.25em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .cta {
+      padding-top: 3.75em;
+    }
+
+    .cta__card {
+      padding: 2.5em 1.25em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cta__card::before,
+    .cta__card::after {
+      animation: none;
+    }
+  }
+</style>

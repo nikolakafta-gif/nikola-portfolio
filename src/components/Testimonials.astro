@@ -1,0 +1,183 @@
+---
+const testimonials = [
+  {
+    quote: '"Our new landing page looks amazing and works perfectly. Great job, Nikola."',
+    name: "Dragana Dukic",
+    role: "Owner BB Ketering, food service",
+    bg: "var(--color-blue, #70b5ff)",
+    variant: "highlight",
+  },
+  {
+    quote: '"Working with Nikola was a crystal clear, fast, and professional process. His high skills in web development made my design breathe into a live website. Communication was easy. I highly recommend Nikola for your next project."',
+    name: "Lazar Savic",
+    role: "UI/UX Designer",
+    bg: "var(--color-primary-05, #1b1d1e0d)",
+    variant: "neutral",
+  },
+  {
+    quote: '"We needed a clean, professional landing page for our transport business and couldn\'t be happier with the result. The site loads fast and our customers actually reach out through it now."',
+    name: "Marko Dukic",
+    role: "Owner Transport Dukic, transport service",
+    bg: "var(--color-primary-05, #1b1d1e0d)",
+    variant: "neutral",
+  },
+  {
+    quote: '"Working with Nikola was refreshingly straightforward. He understood what we needed from the first conversation and delivered without the usual back-and-forth. Couldn\'t wait to share how great it\'s been working with him."',
+    name: "Marijana Cumba",
+    role: "Life Coach",
+    bg: "var(--color-green, #79d45e)",
+    variant: "highlight",
+  },
+];
+---
+
+<section class="testimonials" id="testimonials">
+  <div class="testimonials__inner container">
+    <h2 class="testimonials__heading" data-fade-up>What our satisfied customers are saying <span class="testimonials__italic">about me</span></h2>
+    <div class="testimonials__grid-row" data-stagger>
+      {testimonials.slice(0, 2).map((t) => (
+        <div class={`testimonials__card testimonials__card--${t.variant}`} style={`background-color: ${t.bg};`}>
+          <p class="testimonials__label">Customer Stories</p>
+          <h3 class="testimonials__quote">{t.quote}</h3>
+          <div class="testimonials__author">
+            <p class="testimonials__name">{t.name}</p>
+            <p class="testimonials__role">{t.role}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="testimonials__grid-row" data-stagger>
+      {testimonials.slice(2, 4).map((t) => (
+        <div class={`testimonials__card testimonials__card--${t.variant}`} style={`background-color: ${t.bg};`}>
+          <p class="testimonials__label">Customer Stories</p>
+          <h3 class="testimonials__quote">{t.quote}</h3>
+          <div class="testimonials__author">
+            <p class="testimonials__name">{t.name}</p>
+            <p class="testimonials__role">{t.role}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonials {
+    padding-top: 10em;
+    padding-bottom: 0;
+  }
+
+  .testimonials__inner {
+    max-width: 1272px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .testimonials__heading {
+    max-width: 650px;
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0;
+  }
+
+  .testimonials__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .testimonials__grid-row {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr;
+    gap: 0;
+    width: 100%;
+  }
+
+  .testimonials__grid-row:first-of-type {
+    margin-top: 3em;
+  }
+
+  .testimonials__grid-row:last-of-type {
+    margin-top: 1.5em;
+  }
+
+  .testimonials__card {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    border-radius: 1em;
+    min-height: 31.25em;
+    padding: 2em;
+  }
+
+  .testimonials__label {
+    color: var(--color-primary-60);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .testimonials__quote {
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 1.5em 0 0;
+  }
+
+  .testimonials__author {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+  }
+
+  .testimonials__name {
+    color: var(--color-primary);
+    font-size: 1em;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0 0 0.25em;
+  }
+
+  .testimonials__role {
+    color: var(--color-primary-60);
+    font-size: 0.875em;
+    margin: 0;
+  }
+
+  @media (max-width: 991px) {
+    .testimonials {
+      padding-top: 2.5em;
+    }
+
+    .testimonials__heading {
+      max-width: 600px;
+      font-size: 2.25em;
+    }
+
+    .testimonials__grid-row {
+      grid-template-columns: 1fr;
+      gap: 1.5em;
+    }
+
+    .testimonials__card {
+      min-height: auto;
+      padding: 1.25em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .testimonials {
+      padding-top: 3.75em;
+    }
+  }
+</style>

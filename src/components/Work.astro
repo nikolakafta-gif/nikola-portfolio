@@ -1,0 +1,82 @@
+---
+import WorkStack from "./WorkStack";
+---
+
+<section class="work" id="work">
+  <div class="work__inner container">
+    <div class="work__content">
+      <div class="work__header">
+        <h2 class="work__heading" data-fade-up>How I transformed a small business's into <span class="work__italic">online presence</span></h2>
+      </div>
+      <div class="work__stack" data-fade-up>
+        <WorkStack client:visible />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .work {
+    padding-top: 10em;
+    padding-bottom: 0;
+  }
+
+  .work__inner {
+    max-width: 1272px;
+  }
+
+  .work__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3em;
+  }
+
+  .work__header {
+    display: flex;
+    justify-content: center;
+  }
+
+  .work__heading {
+    max-width: 768px;
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .work__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .work__stack {
+    width: 100%;
+  }
+
+  @media (max-width: 991px) {
+    .work {
+      padding-top: 2.5em;
+    }
+
+    .work__content {
+      gap: 2em;
+    }
+
+    .work__heading {
+      max-width: 500px;
+      font-size: 2.25em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .work {
+      padding-top: 3.75em;
+    }
+  }
+</style>

@@ -1,0 +1,160 @@
+<section class="about">
+  <div class="about__inner container">
+    <h2 class="about__heading" data-fade-up>Your AI-powered <span class="about__italic">developer</span></h2>
+    <div class="about__profile">
+      <div class="about__image-wrap" data-curtain data-curtain-slow>
+        <img
+          src="/assets/images/about-nikola-new.webp"
+          alt="Nikola Miljkovic AI-Powered Web Developer"
+          loading="lazy"
+          class="about__image"
+        />
+        <div class="curtain">
+          <div class="curtain__panel"></div>
+          <div class="curtain__panel"></div>
+          <div class="curtain__panel"></div>
+        </div>
+      </div>
+      <div class="about__info">
+        <p class="about__name">Nikola Miljković</p>
+        <p class="about__role">AI-Powered Web Developer</p>
+        <div class="about__socials">
+          <a href="https://www.linkedin.com/in/nikola-miljkovic-542456108/" target="_blank" rel="noopener noreferrer" class="about__social-link" aria-label="LinkedIn">
+            <img src="/assets/images/icon-linkedin-color.svg" alt="" width="32" height="32" class="about__social-icon" />
+          </a>
+          <a href="https://www.behance.net/nikolamiljkovic5" target="_blank" rel="noopener noreferrer" class="about__social-link" aria-label="Behance">
+            <img src="/assets/images/icon-behance-color.webp" alt="" width="32" height="35" class="about__social-icon about__social-icon--behance" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    padding-top: 10em;
+    padding-bottom: 0;
+  }
+
+  .about__inner {
+    max-width: 1272px;
+  }
+
+  .about__heading {
+    max-width: 600px;
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1;
+    margin: 0 auto;
+  }
+
+  .about__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .about__profile {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin-top: 5em;
+  }
+
+  .about__image-wrap {
+    border-radius: 1.5em;
+    overflow: hidden;
+  }
+
+  .about__image {
+    border-radius: 1.5em;
+    width: 70%;
+    height: 50em;
+    object-fit: cover;
+    object-position: center 15%;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .about__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25em;
+  }
+
+  .about__name {
+    color: var(--color-primary);
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: center;
+    margin: 0;
+  }
+
+  .about__role {
+    color: var(--color-primary-60);
+    font-size: 0.875em;
+    text-align: center;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .about__socials {
+    display: flex;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+  }
+
+  .about__social-icon {
+    width: 2em;
+    height: 2em;
+  }
+
+  .about__social-icon--behance {
+    height: 2.2em;
+  }
+
+  @media (max-width: 991px) {
+    .about {
+      padding-top: 2.5em;
+    }
+
+    .about__heading {
+      max-width: 400px;
+      font-size: 2.25em;
+    }
+
+    .about__profile {
+      margin-top: 2.5em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .about {
+      padding-top: 3.75em;
+    }
+
+    .about__image {
+      width: 100%;
+      height: 35em;
+    }
+
+    .about__name {
+      font-size: 1.375em;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .about__image {
+      height: 25em;
+    }
+  }
+</style>

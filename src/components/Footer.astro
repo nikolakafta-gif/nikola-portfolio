@@ -1,0 +1,150 @@
+<footer class="footer">
+  <div class="footer__inner container">
+    <div class="footer__grid" data-fade-up>
+      <div class="footer__about">
+        <p class="footer__description">Empowering businesses with innovative solutions. Let's create something amazing together.</p>
+        <div class="footer__socials">
+          <a href="https://www.linkedin.com/in/nikola-miljkovic-542456108/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="LinkedIn">
+            <img src="/assets/images/icon-linkedin.svg" alt="" width="24" height="24" />
+          </a>
+          <a href="https://www.instagram.com/nidza____/" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Instagram">
+            <img src="/assets/images/icon-instagram.svg" alt="" width="24" height="24" />
+          </a>
+          <a href="https://dribbble.com/nikola-miljkovic" target="_blank" rel="noopener noreferrer" class="footer__social-link" aria-label="Dribbble">
+            <img src="/assets/images/icon-dribbble.svg" alt="" width="24" height="24" />
+          </a>
+        </div>
+      </div>
+      <div class="footer__contact">
+        <p class="footer__contact-title">Contact Details</p>
+        <ul class="footer__contact-list">
+          <li class="footer__contact-item">Nis, Serbia</li>
+          <li class="footer__contact-item">
+            <a href="mailto:n.miljkovic1987@outlook.com" class="footer__email">n.miljkovic1987@outlook.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    z-index: 6;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    background-color: var(--color-white);
+    border-top: 1px solid var(--color-primary-10);
+  }
+
+  .footer__inner {
+    max-width: 1272px;
+    padding-top: 5em;
+    padding-bottom: 3em;
+  }
+
+  .footer__grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4em;
+    margin-top: 4em;
+    margin-bottom: 4em;
+  }
+
+  .footer__about {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5em;
+    max-width: 475px;
+  }
+
+  .footer__description {
+    color: var(--color-primary-60);
+    font-size: 1em;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .footer__socials {
+    display: flex;
+    gap: 1em;
+  }
+
+  .footer__social-link {
+    display: flex;
+    text-decoration: none;
+  }
+
+  .footer__contact {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer__contact-title {
+    color: var(--color-primary);
+    font-size: 1em;
+    font-weight: 500;
+    margin: 0 0 1em;
+  }
+
+  .footer__contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+  }
+
+  .footer__contact-item {
+    color: var(--color-primary);
+    font-size: 1em;
+    line-height: 1.4;
+  }
+
+  .footer__email {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1.2em;
+    line-height: 1.2;
+    position: relative;
+    overflow: clip;
+  }
+
+  .footer__email:hover {
+    opacity: 0.7;
+  }
+
+  @media (max-width: 991px) {
+    .footer__inner {
+      padding-top: 3em;
+      padding-bottom: 2.5em;
+    }
+
+    .footer__grid {
+      gap: 3em;
+      margin-top: 2em;
+      margin-bottom: 2em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .footer__inner {
+      padding-top: 2.5em;
+      padding-bottom: 2em;
+    }
+
+    .footer__grid {
+      flex-direction: column;
+      gap: 1.875em;
+      margin-top: 1.5em;
+      margin-bottom: 1.5em;
+    }
+
+    .footer__about {
+      gap: 1.125em;
+    }
+  }
+</style>

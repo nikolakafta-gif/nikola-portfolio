@@ -1,0 +1,256 @@
+---
+interface Props {
+  href?: string;
+  label: string;
+  variant?: "primary" | "accent" | "dark";
+  ariaLabel?: string;
+}
+
+const {
+  href = "/contact",
+  label,
+  variant = "dark",
+  ariaLabel,
+} = Astro.props;
+---
+
+<a
+  href={href}
+  aria-label={ariaLabel || label}
+  class:list={["btn-expand", `btn-expand--${variant}`]}
+  data-btn-expand
+>
+  <span class="btn-expand__text" data-btn-text>{label}</span>
+  <span class="btn-expand__icon">
+    <span class="btn-expand__icon-bg"></span>
+    <span class="btn-expand__arrow-clip">
+      <span class="btn-expand__arrow-strip" data-arrow-strip>
+        <svg class="btn-expand__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+        <svg class="btn-expand__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </span>
+    </span>
+  </span>
+</a>
+
+<script>
+  import gsap from "gsap";
+
+  function splitChars(textEl: HTMLElement): HTMLSpanElement[] {
+    const text = textEl.textContent || "";
+    textEl.innerHTML = "";
+
+    return [...text].map((char) => {
+      const span = document.createElement("span");
+      span.textContent = char;
+      span.style.display = "inline-block";
+      if (char === " ") span.style.whiteSpace = "pre";
+      textEl.appendChild(span);
+      return span;
+    });
+  }
+
+  function setupButton(button: HTMLElement) {
+    const strip = button.querySelector<HTMLElement>("[data-arrow-strip]");
+    const textEl = button.querySelector<HTMLElement>("[data-btn-text]");
+    if (!strip || !textEl) return;
+
+    const chars = splitChars(textEl);
+    const shift = parseFloat(getComputedStyle(textEl).fontSize) * 1.5;
+    let tween: gsap.core.Timeline | null = null;
+
+    button.addEventListener("mouseenter", () => {
+      if (tween) tween.kill();
+      gsap.set(strip, { x: 0 });
+      gsap.set(chars, { y: 0 });
+      tween = gsap.timeline()
+        .to(button, {
+          scale: 0.95,
+          duration: 0.4,
+          ease: "power2.inOut",
+        }, 0)
+        .to(chars, {
+          y: -shift,
+          duration: 0.5,
+          ease: "power2.inOut",
+          stagger: 0.025,
+        }, 0)
+        .to(strip, {
+          x: "2.5em",
+          duration: 0.5,
+          ease: "power2.inOut",
+        }, 0);
+    });
+
+    button.addEventListener("mouseleave", () => {
+      if (tween) tween.kill();
+      tween = gsap.timeline()
+        .to(button, {
+          scale: 1,
+          duration: 0.4,
+          ease: "power2.inOut",
+        }, 0)
+        .to(chars, {
+          y: 0,
+          duration: 0.45,
+          ease: "power2.inOut",
+          stagger: 0.02,
+        }, 0)
+        .to(strip, {
+          x: 0,
+          duration: 0.45,
+          ease: "power2.inOut",
+        }, 0);
+    });
+  }
+
+  function init() {
+    const mm = gsap.matchMedia();
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      document.querySelectorAll<HTMLElement>("[data-btn-expand]").forEach(setupButton);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+  document.addEventListener("astro:page-load", init);
+</script>
+
+<style>
+  /* Base button */
+  .btn-expand {
+    cursor: pointer;
+    border-radius: var(--radius-pill);
+    align-items: center;
+    gap: 0.75em;
+    padding: 0.5em 0.5em 0.5em 1.25em;
+    font-family: var(--font-body);
+    font-size: 1em;
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none;
+    display: inline-flex;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+  }
+
+  /* Variant: dark (navbar, footer CTA) */
+  .btn-expand--dark {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .btn-expand--dark .btn-expand__icon-bg {
+    background-color: var(--color-white);
+  }
+
+  .btn-expand--dark .btn-expand__arrow {
+    color: var(--color-primary);
+  }
+
+  /* Variant: accent (hero "Get Started") */
+  .btn-expand--accent {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+  }
+
+  .btn-expand--accent .btn-expand__icon-bg {
+    background-color: var(--color-white);
+  }
+
+  .btn-expand--accent .btn-expand__arrow {
+    color: var(--color-accent);
+  }
+
+  /* Variant: primary (generic on white bg) */
+  .btn-expand--primary {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+  }
+
+  .btn-expand--primary .btn-expand__icon-bg {
+    background-color: var(--color-primary);
+  }
+
+  .btn-expand--primary .btn-expand__arrow {
+    color: var(--color-white);
+  }
+
+  /* Text label */
+  .btn-expand__text {
+    white-space: nowrap;
+    line-height: 1.5;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  .btn-expand__text :global(span) {
+    display: inline-block;
+    position: relative;
+    text-shadow: 0 1.5em currentColor;
+    transform: translateY(0) rotate(0.001deg);
+  }
+
+  /* Arrow icon area */
+  .btn-expand__icon {
+    position: relative;
+    width: 2.5em;
+    height: 2.5em;
+    flex-shrink: 0;
+    z-index: 2;
+  }
+
+  .btn-expand__icon-bg {
+    position: absolute;
+    inset: 0;
+    border-radius: 2em;
+  }
+
+  .btn-expand__arrow-clip {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 2em;
+  }
+
+  .btn-expand__arrow-strip {
+    display: flex;
+    align-items: center;
+    width: 5em;
+    height: 100%;
+    margin-left: -2.5em;
+  }
+
+  .btn-expand__arrow {
+    width: 1.5em;
+    height: 1.5em;
+    flex-shrink: 0;
+    margin: 0 0.5em;
+  }
+
+  /* Focus state */
+  .btn-expand:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 0.25em;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .btn-expand__arrow-strip {
+      transition: none;
+    }
+
+    .btn-expand__text :global(span) {
+      text-shadow: none;
+    }
+  }
+</style>
