@@ -110,6 +110,15 @@ const pageSchema = schema || defaultSchema;
     />
     <title>{title}</title>
 
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9HHYCK1DJM"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-9HHYCK1DJM');
+    </script>
+
     <!-- JSON-LD Schema -->
     <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
     {extraSchemas.map((s) => (
