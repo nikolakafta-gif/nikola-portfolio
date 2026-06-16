@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nikolamiljkovic.com/sitemap-index.xml
+Sitemap: https://www.nikolamiljkovic.live/sitemap-index.xml

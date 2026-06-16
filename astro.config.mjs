@@ -7,7 +7,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://nikolamiljkovic.com',
+  site: 'https://www.nikolamiljkovic.live',
   integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
