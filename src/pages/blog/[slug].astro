@@ -1,0 +1,487 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import Cta from "../../components/Cta.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
+import Markdoc from "@markdoc/markdoc";
+
+export const prerender = true;
+
+export async function getStaticPaths() {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  const postSlugs = await reader.collections.posts.list();
+  return postSlugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const reader = createReader(process.cwd(), keystaticConfig);
+const post = await reader.collections.posts.read(slug!, { resolveLinkedFiles: true });
+
+if (!post) {
+  return Astro.redirect("/blog");
+}
+
+const { content, ...entry } = post;
+const transformed = Markdoc.transform(content.node);
+const renderedContent = Markdoc.renderers.html(transformed);
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: entry.title,
+  description: entry.summary,
+  datePublished: entry.publishedDate,
+  author: {
+    "@type": "Person",
+    name: "Nikola Miljković",
+    url: "https://www.nikolamiljkovic.live",
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Nikola Miljković",
+    url: "https://www.nikolamiljkovic.live",
+  },
+  mainEntityOfPage: {
+    "@type": "WebPage",
+    "@id": `https://www.nikolamiljkovic.live/blog/${slug}/`,
+  },
+  ...(entry.coverImage && {
+    image: `https://www.nikolamiljkovic.live${entry.coverImage}`,
+  }),
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.nikolamiljkovic.live/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Case Studies",
+      item: "https://www.nikolamiljkovic.live/blog/",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: entry.title,
+      item: `https://www.nikolamiljkovic.live/blog/${slug}/`,
+    },
+  ],
+};
+
+const formattedDate = entry.publishedDate
+  ? new Date(entry.publishedDate).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    })
+  : null;
+---
+
+<BaseLayout
+  title={`${entry.title} — Case Study | Nikola Miljković`}
+  description={entry.summary || `Case study: ${entry.title}`}
+  schema={articleSchema}
+  extraSchemas={[breadcrumbSchema]}
+>
+  <Navbar />
+  <main id="main-content">
+    <article class="case-study">
+      <header class="case-study__header">
+        <div class="case-study__header-inner container">
+          <a href="/blog" class="case-study__back" data-fade-up>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 19-7-7 7-7" />
+              <path d="M19 12H5" />
+            </svg>
+            All case studies
+          </a>
+          <h1 class="case-study__title" data-fade-up>{entry.title}</h1>
+          {entry.summary && (
+            <p class="case-study__summary" data-fade-up>{entry.summary}</p>
+          )}
+          <div class="case-study__meta" data-fade-up>
+            {entry.client && (
+              <div class="case-study__meta-item">
+                <span class="case-study__meta-label">Client</span>
+                <span class="case-study__meta-value">{entry.client}</span>
+              </div>
+            )}
+            {entry.industry && (
+              <div class="case-study__meta-item">
+                <span class="case-study__meta-label">Industry</span>
+                <span class="case-study__meta-value">{entry.industry}</span>
+              </div>
+            )}
+            {entry.services && (
+              <div class="case-study__meta-item">
+                <span class="case-study__meta-label">Services</span>
+                <span class="case-study__meta-value">{entry.services}</span>
+              </div>
+            )}
+            {entry.duration && (
+              <div class="case-study__meta-item">
+                <span class="case-study__meta-label">Duration</span>
+                <span class="case-study__meta-value">{entry.duration}</span>
+              </div>
+            )}
+            {formattedDate && (
+              <div class="case-study__meta-item">
+                <span class="case-study__meta-label">Published</span>
+                <time class="case-study__meta-value">{formattedDate}</time>
+              </div>
+            )}
+          </div>
+          {entry.liveUrl && (
+            <a
+              href={entry.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="case-study__live-link"
+              data-fade-up
+            >
+              View live site
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
+          )}
+        </div>
+      </header>
+
+      {entry.coverImage && (
+        <div class="case-study__cover" data-fade-up>
+          <div class="case-study__cover-inner container">
+            <img
+              src={entry.coverImage}
+              alt={`${entry.title} project screenshot`}
+              class="case-study__cover-image"
+              width="1200"
+              height="680"
+            />
+          </div>
+        </div>
+      )}
+
+      <div class="case-study__content" data-fade-up>
+        <div class="case-study__content-inner container">
+          <div class="prose" set:html={renderedContent} />
+        </div>
+      </div>
+    </article>
+
+    <Cta />
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .case-study__header {
+    padding-top: 12em;
+    padding-bottom: 2.5em;
+  }
+
+  .case-study__header-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5em;
+  }
+
+  .case-study__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-body);
+    font-size: 0.875em;
+    font-weight: 500;
+    color: var(--color-primary-60);
+    text-decoration: none;
+    transition: color var(--transition-base);
+  }
+
+  .case-study__back:hover {
+    color: var(--color-accent);
+  }
+
+  .case-study__back svg {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .case-study__title {
+    font-family: var(--font-body);
+    font-size: 4em;
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  .case-study__summary {
+    font-size: 1.25em;
+    line-height: 1.5;
+    color: var(--color-primary-60);
+    max-width: 700px;
+    margin: 0;
+  }
+
+  .case-study__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+    padding: 1.5em 0;
+    border-top: 1px solid var(--color-primary-10);
+    border-bottom: 1px solid var(--color-primary-10);
+    width: 100%;
+  }
+
+  .case-study__meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+  }
+
+  .case-study__meta-label {
+    font-family: var(--font-body);
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-primary-40);
+  }
+
+  .case-study__meta-value {
+    font-family: var(--font-body);
+    font-size: 0.9375em;
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+
+  .case-study__live-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.75em 1.5em;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 0.875em;
+    font-weight: 500;
+    border-radius: var(--radius-pill);
+    text-decoration: none;
+    transition: opacity var(--transition-base);
+  }
+
+  .case-study__live-link:hover {
+    opacity: 0.85;
+  }
+
+  .case-study__live-link svg {
+    width: 1em;
+    height: 1em;
+  }
+
+  .case-study__cover {
+    padding-bottom: 2.5em;
+  }
+
+  .case-study__cover-image {
+    width: 100%;
+    border-radius: 1em;
+    object-fit: cover;
+    display: block;
+  }
+
+  .case-study__content {
+    padding-bottom: 3em;
+  }
+
+  .case-study__content-inner {
+    max-width: 800px;
+  }
+
+  /* Prose styles for Markdoc content */
+  .prose :global(h2) {
+    font-family: var(--font-body);
+    font-size: 2em;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-primary);
+    margin: 2em 0 0.75em;
+  }
+
+  .prose :global(h3) {
+    font-family: var(--font-body);
+    font-size: 1.375em;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-primary);
+    margin: 1.5em 0 0.5em;
+  }
+
+  .prose :global(p) {
+    font-size: 1.0625em;
+    line-height: 1.7;
+    color: var(--color-primary-60);
+    margin: 0 0 1.25em;
+  }
+
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin: 0 0 1.25em;
+    padding-left: 1.5em;
+  }
+
+  .prose :global(ul) {
+    list-style: disc;
+  }
+
+  .prose :global(ol) {
+    list-style: decimal;
+  }
+
+  .prose :global(li) {
+    font-size: 1.0625em;
+    line-height: 1.7;
+    color: var(--color-primary-60);
+    margin-bottom: 0.5em;
+  }
+
+  .prose :global(strong) {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .prose :global(a) {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: opacity var(--transition-base);
+  }
+
+  .prose :global(a:hover) {
+    opacity: 0.75;
+  }
+
+  .prose :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-primary-10);
+    margin: 2.5em 0;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--color-accent);
+    padding-left: 1.25em;
+    margin: 1.5em 0;
+    font-style: italic;
+    color: var(--color-primary-60);
+  }
+
+  .prose :global(code) {
+    font-size: 0.9em;
+    background-color: var(--color-primary-05);
+    padding: 0.15em 0.4em;
+    border-radius: var(--radius-sm);
+  }
+
+  .prose :global(pre) {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 1.25em 1.5em;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin: 1.5em 0;
+  }
+
+  .prose :global(pre code) {
+    background: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  .prose :global(img) {
+    width: 100%;
+    border-radius: var(--radius-md);
+    margin: 1.5em 0;
+  }
+
+  @media (max-width: 991px) {
+    .case-study__header {
+      padding-top: 10em;
+    }
+
+    .case-study__title {
+      font-size: 3em;
+    }
+
+    .case-study__meta {
+      gap: 1.5em;
+    }
+
+  }
+
+  @media (max-width: 767px) {
+    .case-study__header {
+      padding-top: 8.75em;
+      padding-bottom: 1.5em;
+    }
+
+    .case-study__title {
+      font-size: 2.5em;
+    }
+
+    .case-study__summary {
+      font-size: 1.0625em;
+    }
+
+    .case-study__meta {
+      gap: 1.25em;
+    }
+
+    .case-study__cover {
+      padding-bottom: 1.25em;
+    }
+
+    .case-study__cover-image {
+      border-radius: 0.75em;
+    }
+
+    .case-study__content {
+      padding-bottom: 1em;
+    }
+
+    .case-study__content-inner {
+      max-width: 100%;
+    }
+
+    .prose :global(h2) {
+      font-size: 1.625em;
+    }
+
+    .prose :global(h3) {
+      font-size: 1.25em;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .case-study__title {
+      font-size: 2em;
+    }
+
+    .case-study__meta {
+      flex-direction: column;
+      gap: 1em;
+    }
+  }
+</style>

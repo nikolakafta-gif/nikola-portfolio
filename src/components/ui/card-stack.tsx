@@ -262,8 +262,7 @@ export function CardStack<T extends CardStackItem>({
         <div style={{ marginTop: "1.5em", position: "relative", zIndex: 10 }} className="flex justify-center">
           <a
             href={activeItem.href}
-            target="_blank"
-            rel="noopener noreferrer"
+            {...(activeItem.href.startsWith("/") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -450,8 +449,7 @@ function DefaultFanCard({ item, isMobile }: { item: CardStackItem; active: boole
           {item.href && (
             <a
               href={item.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(item.href.startsWith("/") ? {} : { target: "_blank", rel: "noopener noreferrer" })}
               className="fan-view"
               style={{
                 display: "inline-flex",

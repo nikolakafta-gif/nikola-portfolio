@@ -9,7 +9,7 @@ const projects: CardStackItem[] = [
     title: "Comira",
     description: "Coming soon page with countdown timer and waitlist signup",
     imageSrc: "/assets/images/work-comira.webp",
-    href: "https://comira-eight.vercel.app/",
+    href: "/blog/comira",
     tag: "Web Development",
   },
   {
@@ -17,7 +17,7 @@ const projects: CardStackItem[] = [
     title: "Doorly",
     description: "Smart doorbell landing page with sleek product showcase",
     imageSrc: "/assets/images/work-doorly.webp",
-    href: "https://doorly-chi.vercel.app/",
+    href: "/blog/doorly",
     tag: "Web Development",
   },
   {
@@ -25,7 +25,7 @@ const projects: CardStackItem[] = [
     title: "Vistal",
     description: "Modern business website with clean design and smooth UX",
     imageSrc: "/assets/images/work-vistal.webp",
-    href: "https://vistal-brown.vercel.app/",
+    href: "/blog/vistal",
     tag: "Web Development",
   },
   {
@@ -33,7 +33,7 @@ const projects: CardStackItem[] = [
     title: "Casera",
     description: "Real estate platform with elegant property showcase",
     imageSrc: "/assets/images/work-casera.webp",
-    href: "https://casera-hotel.vercel.app/",
+    href: "/blog/casera",
     tag: "Web Development",
   },
   {
@@ -41,7 +41,7 @@ const projects: CardStackItem[] = [
     title: "Advisia",
     description: "Consulting agency website with professional branding",
     imageSrc: "/assets/images/work-advisia.webp",
-    href: "https://advisia-five.vercel.app/",
+    href: "/blog/advisia",
     tag: "Web Development",
   },
 ];

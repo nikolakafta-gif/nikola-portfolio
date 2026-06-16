@@ -1,0 +1,344 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+export const prerender = true;
+
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const allPosts = await reader.collections.posts.all();
+
+const posts = allPosts
+  .filter((post) => !post.entry.draft)
+  .sort((a, b) => {
+    const dateA = a.entry.publishedDate ? new Date(a.entry.publishedDate).getTime() : 0;
+    const dateB = b.entry.publishedDate ? new Date(b.entry.publishedDate).getTime() : 0;
+    return dateB - dateA;
+  });
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: "https://www.nikolamiljkovic.live/",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Case Studies",
+      item: "https://www.nikolamiljkovic.live/blog/",
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Case Studies | Nikola Miljković"
+  description="Explore my recent web development projects — real case studies with detailed breakdowns of the challenge, approach, and results."
+  extraSchemas={[breadcrumbSchema]}
+>
+  <Navbar />
+  <main id="main-content">
+    <section class="blog-hero">
+      <div class="blog-hero__inner container">
+        <p class="blog-hero__label" data-fade-up>Case Studies</p>
+        <h1 class="blog-hero__heading" data-fade-up>
+          Projects I've <span class="blog-hero__italic">built</span>
+        </h1>
+        <p class="blog-hero__text" data-fade-up>
+          A closer look at each project — the challenge, the approach, and the
+          result.
+        </p>
+      </div>
+    </section>
+
+    <section class="blog-grid-section">
+      <div class="blog-grid-section__inner container">
+        <div class="blog-grid" data-stagger>
+          {
+            posts.map((post) => (
+              <a href={`/blog/${post.slug}`} class="blog-card">
+                {post.entry.coverImage ? (
+                  <div class="blog-card__image-wrap">
+                    <img
+                      src={post.entry.coverImage}
+                      alt={post.entry.title}
+                      class="blog-card__image"
+                      loading="lazy"
+                      width="600"
+                      height="340"
+                    />
+                  </div>
+                ) : (
+                  <div class="blog-card__image-wrap blog-card__image-wrap--placeholder">
+                    <span class="blog-card__placeholder-text">
+                      {post.entry.title}
+                    </span>
+                  </div>
+                )}
+                <div class="blog-card__body">
+                  <div class="blog-card__meta">
+                    {post.entry.industry && (
+                      <span class="blog-card__tag">{post.entry.industry}</span>
+                    )}
+                    {post.entry.publishedDate && (
+                      <time class="blog-card__date">
+                        {new Date(post.entry.publishedDate).toLocaleDateString(
+                          "en-US",
+                          { year: "numeric", month: "short" }
+                        )}
+                      </time>
+                    )}
+                  </div>
+                  <h2 class="blog-card__title">{post.entry.title}</h2>
+                  <p class="blog-card__summary">{post.entry.summary}</p>
+                  <span class="blog-card__link">
+                    Read case study
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-hero {
+    padding-top: 12em;
+    padding-bottom: 2.5em;
+  }
+
+  .blog-hero__inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .blog-hero__label {
+    font-family: var(--font-body);
+    font-size: 0.875em;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 1.5em;
+  }
+
+  .blog-hero__heading {
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    font-size: 4em;
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .blog-hero__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .blog-hero__text {
+    color: var(--color-primary-60);
+    font-size: 1.125em;
+    line-height: 1.5;
+    max-width: 550px;
+    margin: 1.5em 0 0;
+  }
+
+  .blog-grid-section {
+    padding-top: 2.5em;
+    padding-bottom: var(--spacing-section);
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2em;
+  }
+
+  .blog-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-primary-10);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    transition: box-shadow var(--transition-smooth), transform var(--transition-smooth);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .blog-card:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-4px);
+  }
+
+  .blog-card__image-wrap {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--color-primary-05);
+  }
+
+  .blog-card__image-wrap--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary);
+  }
+
+  .blog-card__placeholder-text {
+    font-family: var(--font-heading);
+    font-size: 2em;
+    color: var(--color-white);
+    font-style: italic;
+  }
+
+  .blog-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-smooth);
+  }
+
+  .blog-card:hover .blog-card__image {
+    transform: scale(1.03);
+  }
+
+  .blog-card__body {
+    padding: 1.5em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    flex: 1;
+  }
+
+  .blog-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+  }
+
+  .blog-card__tag {
+    font-family: var(--font-body);
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .blog-card__date {
+    font-family: var(--font-body);
+    font-size: 0.75em;
+    color: var(--color-primary-40);
+  }
+
+  .blog-card__title {
+    font-family: var(--font-body);
+    font-size: 1.5em;
+    font-weight: 600;
+    line-height: 1.25;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  .blog-card__summary {
+    font-family: var(--font-body);
+    font-size: 0.9375em;
+    line-height: 1.5;
+    color: var(--color-primary-60);
+    margin: 0;
+  }
+
+  .blog-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--font-body);
+    font-size: 0.875em;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-top: auto;
+    padding-top: 0.5em;
+    transition: color var(--transition-base);
+  }
+
+  .blog-card:hover .blog-card__link {
+    color: var(--color-accent);
+  }
+
+  .blog-card__link svg {
+    width: 1em;
+    height: 1em;
+    transition: transform var(--transition-base);
+  }
+
+  .blog-card:hover .blog-card__link svg {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 991px) {
+    .blog-hero {
+      padding-top: 10em;
+    }
+
+    .blog-hero__heading {
+      font-size: 3em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .blog-hero {
+      padding-top: 8.75em;
+      padding-bottom: 1.5em;
+    }
+
+    .blog-hero__heading {
+      font-size: 2.5em;
+    }
+
+    .blog-hero__text {
+      font-size: 1em;
+    }
+
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-grid-section {
+      padding-bottom: 3.75em;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .blog-hero__heading {
+      font-size: 2em;
+    }
+  }
+</style>

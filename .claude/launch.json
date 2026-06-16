@@ -41,7 +41,8 @@
       "name": "portfolio",
       "runtimeExecutable": "npx",
       "runtimeArgs": ["astro", "dev", "--port", "4340"],
-      "port": 4340
+      "port": 4340,
+      "autoPort": false
     }
   ]
 }
