@@ -5,9 +5,8 @@ import ButtonExpand from "./ButtonExpand.astro";
 <section class="hero">
   <div class="hero__inner container">
     <h1 class="hero__heading">
-      <span class="hero__line" data-hero-line="1">I build pixel</span>
-      <span class="hero__line" data-hero-line="2">perfect websites,</span>
-      <span class="hero__line hero__italic" data-hero-line="3">one project at a time</span>
+      <span class="hero__line" data-hero-line="1">I build pixel perfect websites,</span>
+      <span class="hero__line hero__italic" data-hero-line="2">one project at a time</span>
     </h1>
     <p class="hero__text" data-hero-text>Whether you're refreshing an outdated website or building something completely new, my approach stays the same. AI-enhanced workflow, clean interactions, and pixel-perfect execution that brings your brand to life.</p>
     <div class="hero__actions" data-hero-actions>
@@ -22,30 +21,29 @@ import ButtonExpand from "./ButtonExpand.astro";
   async function animateHero() {
     const line1 = document.querySelector('[data-hero-line="1"]') as HTMLElement;
     const line2 = document.querySelector('[data-hero-line="2"]') as HTMLElement;
-    const line3 = document.querySelector('[data-hero-line="3"]') as HTMLElement;
     const text = document.querySelector('[data-hero-text]') as HTMLElement;
     const actions = document.querySelector('[data-hero-actions]') as HTMLElement;
-    if (!line1 || !line2 || !line3 || !text || !actions) return;
+    if (!line1 || !line2 || !text || !actions) return;
     if (line1.dataset.animated) return;
     line1.dataset.animated = "true";
 
     /* Wait for fonts — prevents layout shift from font-swap */
     await document.fonts.ready;
 
-    /* Split line3 into characters for typewriter */
-    const line3Text = line3.textContent || "";
-    line3.textContent = "";
-    const chars = [...line3Text].map((char) => {
+    /* Split line2 into characters for typewriter */
+    const line2Text = line2.textContent || "";
+    line2.textContent = "";
+    const chars = [...line2Text].map((char) => {
       const span = document.createElement("span");
       span.textContent = char;
       span.style.display = "inline-block";
       span.style.opacity = "0";
       if (char === " ") span.style.whiteSpace = "pre";
-      line3.appendChild(span);
+      line2.appendChild(span);
       return span;
     });
-    /* line3 itself must be visible — chars handle their own opacity */
-    line3.style.opacity = "1";
+    /* line2 itself must be visible — chars handle their own opacity */
+    line2.style.opacity = "1";
 
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -57,14 +55,7 @@ import ButtonExpand from "./ButtonExpand.astro";
         { x: 0, scale: 1, rotation: 0, opacity: 1, duration: 1, ease: "back.out(1.4)" }
       )
 
-      /* Line 2: from left, scale 0→1, opposite rotation */
-      .fromTo(line2,
-        { x: -200, scale: 0, rotation: -12, opacity: 0 },
-        { x: 0, scale: 1, rotation: 0, opacity: 1, duration: 1, ease: "back.out(1.4)" },
-        "-=0.5"
-      )
-
-      /* Line 3: typewriter — letter by letter */
+      /* Line 2: typewriter — letter by letter */
       .to(chars, {
         opacity: 1,
         duration: 0.05,
