@@ -22,7 +22,7 @@ function initCurtainReveal() {
       stagger: stag,
       scrollTrigger: {
         trigger: wrap,
-        start: "top 80%",
+        start: "top 95%",
         once: true,
       },
     });
@@ -41,7 +41,7 @@ function initFadeUp() {
         ease: "power3.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 85%",
+          start: "top 95%",
           once: true,
         },
       }
@@ -63,7 +63,7 @@ function initStagger() {
         stagger: 0.15,
         scrollTrigger: {
           trigger: parent,
-          start: "top 80%",
+          start: "top 95%",
           once: true,
         },
       }

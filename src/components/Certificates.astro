@@ -14,11 +14,11 @@ const marqueeItems = [...certificates, ...certificates, ...certificates, ...cert
     <div class="certificates__content">
       <h2 class="certificates__heading" data-fade-up>Certificates <span class="certificates__italic">webflow academy</span></h2>
     </div>
-    <div class="certificates__marquee">
+    <div class="certificates__marquee" data-fade-up>
       <div class="certificates__track">
         {marqueeItems.map((cert) => (
           <div class="certificates__card">
-            <img src={cert.src} alt={cert.alt} loading="lazy" class="certificates__image" />
+            <img src={cert.src} alt={cert.alt} width="1650" height="1275" loading="eager" decoding="async" class="certificates__image" />
           </div>
         ))}
       </div>
@@ -117,8 +117,7 @@ const marqueeItems = [...certificates, ...certificates, ...certificates, ...cert
 
   .certificates__image {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
     display: block;
   }
 

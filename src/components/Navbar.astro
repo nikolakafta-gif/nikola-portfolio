@@ -1,13 +1,16 @@
 ---
 import ButtonExpand from "./ButtonExpand.astro";
 
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "";
+const prefix = isHome ? "" : "/";
+
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About me", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Testimonial", href: "#testimonials" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Certificates", href: "#certificates" },
+  { label: "Home", href: `${prefix}#home` },
+  { label: "About me", href: `${prefix}#about` },
+  { label: "Work", href: `${prefix}#work` },
+  { label: "Testimonial", href: `${prefix}#testimonials` },
+  { label: "FAQ", href: `${prefix}#faq` },
+  { label: "Certificates", href: `${prefix}#certificates` },
 ];
 ---
 
@@ -24,7 +27,7 @@ const navLinks = [
       <button class="navbar__menu-toggle" aria-label="Open menu">
         <img src="/assets/images/icon-menu.svg" alt="" width="24" height="24" />
       </button>
-      <ButtonExpand href="/contact" label="Let's Collaborate" variant="dark" />
+      {isHome && <ButtonExpand href="/contact" label="Let's Collaborate" variant="dark" />}
     </div>
   </nav>
 

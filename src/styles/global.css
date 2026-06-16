@@ -301,3 +301,23 @@ p {
   border-radius: var(--radius-sm);
   text-decoration: none;
 }
+
+.skip-to-content {
+  position: fixed;
+  top: -100%;
+  left: 0.5em;
+  z-index: 9999;
+  padding: 0.75em 1.5em;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 0.5em;
+}

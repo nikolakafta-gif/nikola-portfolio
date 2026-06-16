@@ -1,0 +1,358 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import ButtonExpand from "../components/ButtonExpand.astro";
+
+const contactSchema = {
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "name": "Contact Nikola Miljković",
+  "description": "Get in touch with Nikola Miljković. Let's discuss your next web project.",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Nikola Miljković",
+    "jobTitle": "Web Developer",
+    "email": "n.miljkovic1987@outlook.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Nis",
+      "addressCountry": "RS"
+    },
+    "sameAs": [
+      "https://www.linkedin.com/in/nikola-miljkovic-542456108/"
+    ]
+  }
+};
+---
+
+<BaseLayout title="Contact | Nikola Miljković" description="Get in touch with Nikola Miljković. Let's discuss your next web project." schema={contactSchema}>
+  <Navbar />
+  <main id="main-content">
+    <section class="contact-hero">
+      <div class="contact-hero__inner container">
+        <p class="contact-hero__label" data-fade-up>Get in touch</p>
+        <h1 class="contact-hero__heading" data-fade-up>Let's build something <span class="contact-hero__italic">together</span></h1>
+        <p class="contact-hero__text" data-fade-up>Have a project in mind or just want to say hello? Fill out the form below and I'll get back to you as soon as possible.</p>
+      </div>
+    </section>
+
+    <section class="contact-body">
+      <div class="contact-body__inner container">
+        <div class="contact-body__grid">
+          <div class="contact-body__info" data-stagger>
+            <div class="contact-info-card">
+              <div class="contact-info-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <p class="contact-info-card__label">Email</p>
+              <a href="mailto:n.miljkovic1987@outlook.com" class="contact-info-card__value">n.miljkovic1987@outlook.com</a>
+            </div>
+            <div class="contact-info-card">
+              <div class="contact-info-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <p class="contact-info-card__label">Location</p>
+              <p class="contact-info-card__value">Nis, Serbia</p>
+            </div>
+            <div class="contact-info-card">
+              <div class="contact-info-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <p class="contact-info-card__label">Availability</p>
+              <p class="contact-info-card__value">Open for new projects</p>
+            </div>
+            <div class="contact-info-card">
+              <div class="contact-info-card__icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+              </div>
+              <p class="contact-info-card__label">LinkedIn</p>
+              <a href="https://www.linkedin.com/in/nikola-miljkovic-542456108/" target="_blank" rel="noopener noreferrer" class="contact-info-card__value contact-info-card__link">Connect with me</a>
+            </div>
+          </div>
+
+          <form class="contact-form" data-fade-up>
+            <div class="contact-form__group">
+              <label for="name" class="contact-form__label">Name</label>
+              <input type="text" id="name" name="name" class="contact-form__input" placeholder="Your name" required />
+            </div>
+            <div class="contact-form__group">
+              <label for="email" class="contact-form__label">Email</label>
+              <input type="email" id="email" name="email" class="contact-form__input" placeholder="your@email.com" required />
+            </div>
+            <div class="contact-form__group">
+              <label for="project" class="contact-form__label">Project type</label>
+              <select id="project" name="project" class="contact-form__input contact-form__select">
+                <option value="" disabled selected>Select a project type</option>
+                <option value="new-website">New website</option>
+                <option value="redesign">Website redesign</option>
+                <option value="landing-page">Landing page</option>
+                <option value="webflow">Webflow development</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="contact-form__group">
+              <label for="message" class="contact-form__label">Message</label>
+              <textarea id="message" name="message" class="contact-form__input contact-form__textarea" placeholder="Tell me about your project..." rows="5" required></textarea>
+            </div>
+            <div class="contact-form__submit">
+              <ButtonExpand href="#" label="Send message" variant="dark" />
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .contact-hero {
+    padding-top: 12em;
+    padding-bottom: 2.5em;
+  }
+
+  .contact-hero__inner {
+    max-width: 1272px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-hero__label {
+    font-family: var(--font-body);
+    font-size: 0.875em;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 1.5em;
+  }
+
+  .contact-hero__heading {
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    font-size: 4em;
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0;
+    max-width: 700px;
+  }
+
+  .contact-hero__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .contact-hero__text {
+    color: var(--color-primary-60);
+    font-size: 1.125em;
+    line-height: 1.5;
+    max-width: 550px;
+    margin: 1.5em 0 0;
+  }
+
+  /* Body */
+  .contact-body {
+    padding-top: 2.5em;
+    padding-bottom: 5em;
+  }
+
+  .contact-body__inner {
+    max-width: 1272px;
+  }
+
+  .contact-body__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 4em;
+    align-items: start;
+  }
+
+  /* Info cards */
+  .contact-body__info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+  }
+
+  .contact-info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    padding: 1.5em;
+    border: 1px solid var(--color-primary-10);
+    border-radius: var(--radius-xl);
+    transition: box-shadow var(--transition-smooth);
+  }
+
+  .contact-info-card:hover {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .contact-info-card__icon {
+    width: 2.5em;
+    height: 2.5em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primary-05);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+  }
+
+  .contact-info-card__icon svg {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .contact-info-card__label {
+    font-family: var(--font-body);
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-primary-40);
+    margin: 0.5em 0 0;
+  }
+
+  .contact-info-card__value {
+    font-family: var(--font-body);
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--color-primary);
+    margin: 0;
+    text-decoration: none;
+  }
+
+  .contact-info-card__link {
+    transition: color var(--transition-base);
+  }
+
+  .contact-info-card__link:hover {
+    color: var(--color-accent);
+  }
+
+  /* Form */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    padding: 2.5em;
+    border: 1px solid var(--color-primary-10);
+    border-radius: var(--radius-xl);
+    background-color: var(--color-white);
+  }
+
+  .contact-form__group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+  }
+
+  .contact-form__label {
+    font-family: var(--font-body);
+    font-size: 0.875em;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .contact-form__input {
+    font-family: var(--font-body);
+    font-size: 1em;
+    color: var(--color-primary);
+    background-color: var(--color-primary-05);
+    border: 1px solid var(--color-primary-10);
+    border-radius: var(--radius-md);
+    padding: 0.875em 1em;
+    outline: none;
+    transition: border-color var(--transition-base);
+  }
+
+  .contact-form__input::placeholder {
+    color: var(--color-primary-40);
+  }
+
+  .contact-form__input:focus {
+    border-color: var(--color-accent);
+  }
+
+  .contact-form__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231b1d1e99' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1em center;
+    padding-right: 2.5em;
+    cursor: pointer;
+  }
+
+  .contact-form__textarea {
+    resize: vertical;
+    min-height: 8em;
+  }
+
+  .contact-form__submit {
+    margin-top: 0.5em;
+  }
+
+  /* Tablet */
+  @media (max-width: 991px) {
+    .contact-hero {
+      padding-top: 10em;
+    }
+
+    .contact-hero__heading {
+      font-size: 3em;
+    }
+
+    .contact-body__grid {
+      grid-template-columns: 1fr;
+      gap: 2.5em;
+    }
+
+    .contact-body__info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1em;
+    }
+  }
+
+  /* Mobile landscape */
+  @media (max-width: 767px) {
+    .contact-hero {
+      padding-top: 8.75em;
+      padding-bottom: 1.5em;
+    }
+
+    .contact-hero__heading {
+      font-size: 2.5em;
+    }
+
+    .contact-hero__text {
+      font-size: 1em;
+    }
+
+    .contact-body {
+      padding-bottom: 3.75em;
+    }
+
+    .contact-body__info {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-form {
+      padding: 1.5em;
+    }
+  }
+
+  /* Mobile portrait */
+  @media (max-width: 479px) {
+    .contact-hero__heading {
+      font-size: 2em;
+    }
+  }
+</style>
