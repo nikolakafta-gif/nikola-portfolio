@@ -38,7 +38,7 @@ const testimonials = [
       {testimonials.slice(0, 2).map((t) => (
         <div class={`testimonials__card testimonials__card--${t.variant}`} style={`background-color: ${t.bg};`}>
           <p class="testimonials__label">Customer Stories</p>
-          <h3 class="testimonials__quote">{t.quote}</h3>
+          <blockquote class="testimonials__quote">{t.quote}</blockquote>
           <div class="testimonials__author">
             <p class="testimonials__name">{t.name}</p>
             <p class="testimonials__role">{t.role}</p>
@@ -50,7 +50,7 @@ const testimonials = [
       {testimonials.slice(2, 4).map((t) => (
         <div class={`testimonials__card testimonials__card--${t.variant}`} style={`background-color: ${t.bg};`}>
           <p class="testimonials__label">Customer Stories</p>
-          <h3 class="testimonials__quote">{t.quote}</h3>
+          <blockquote class="testimonials__quote">{t.quote}</blockquote>
           <div class="testimonials__author">
             <p class="testimonials__name">{t.name}</p>
             <p class="testimonials__role">{t.role}</p>
@@ -132,6 +132,7 @@ const testimonials = [
     font-weight: 500;
     line-height: 1.2;
     margin: 1.5em 0 0;
+    quotes: none;
   }
 
   .testimonials__author {

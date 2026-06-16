@@ -11,9 +11,77 @@ import Faq from "../components/Faq.astro";
 import Certificates from "../components/Certificates.astro";
 import Cta from "../components/Cta.astro";
 import Footer from "../components/Footer.astro";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What services do you offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "I specialize in developing high-quality websites using AI-enhanced workflows and modern frameworks like Astro, including full site builds, redesigns, landing pages, and ongoing site optimization."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a typical project take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A typical project takes 1 to 3 weeks. Smaller landing pages can be finished in a few days, while full multi-page websites with CMS, animations, and custom features usually require 2–3 weeks."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much is the price of the website?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Since every project is unique, the price varies depending on features, number of pages, animations, and overall goals. Once I understand your requirements, I'll send a detailed estimate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you offer ongoing support after project completion?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolutely. Every project includes 30 days of free post-launch support for small adjustments, troubleshooting, and ensuring everything runs smoothly. Additional long-term support is also available if needed."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How often will I receive updates on my project?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "I keep you informed at every stage. You can expect progress updates several times per week, along with previews whenever important sections are finished."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I get started with you?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Getting started is easy. Send me a short overview of your project, and I'll follow up with a few details I need. Once we define the scope, I'll prepare a proposal and timeline so we can begin."
+      }
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://www.nikolamiljkovic.live/"
+    }
+  ]
+};
 ---
 
-<BaseLayout>
+<BaseLayout extraSchemas={[faqSchema, breadcrumbSchema]}>
   <Navbar />
   <main id="main-content">
     <Hero />

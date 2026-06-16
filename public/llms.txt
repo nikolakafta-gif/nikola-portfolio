@@ -1,0 +1,37 @@
+# Nikola Miljković — AI-Powered Web Developer
+
+> Nikola Miljković is a freelance web developer based in Niš, Serbia, specializing in AI-enhanced web development workflows. He builds pixel-perfect websites using modern frameworks like Astro and Webflow, with a focus on clean code, strong foundations, and seamless interactions.
+
+## Services
+- Full website builds (multi-page sites with CMS, animations, custom features)
+- Website redesigns
+- Landing pages
+- Webflow development
+- Ongoing site optimization and support
+
+## Key Facts
+- Based in: Niš, Serbia (CET timezone)
+- Available for: Remote work worldwide
+- Typical project timeline: 1–3 weeks
+- Post-launch support: 30 days free included with every project
+- Tech stack: Astro, Webflow, JavaScript, CSS, GSAP, AI-enhanced workflows
+
+## Contact
+- Website: https://www.nikolamiljkovic.live
+- Email: n.miljkovic1987@outlook.com
+- LinkedIn: https://www.linkedin.com/in/nikola-miljkovic-542456108/
+- Behance: https://www.behance.net/nikolamiljkovic5
+- Dribbble: https://dribbble.com/nikola-miljkovic
+
+## FAQ
+Q: What services does Nikola Miljković offer?
+A: He specializes in developing high-quality websites using AI-enhanced workflows and modern frameworks like Astro, including full site builds, redesigns, landing pages, and ongoing site optimization.
+
+Q: How long does a typical project take?
+A: A typical project takes 1 to 3 weeks. Smaller landing pages can be finished in a few days, while full multi-page websites with CMS, animations, and custom features usually require 2–3 weeks.
+
+Q: Does Nikola offer ongoing support after project completion?
+A: Yes. Every project includes 30 days of free post-launch support for small adjustments, troubleshooting, and ensuring everything runs smoothly.
+
+Q: How do I get started working with Nikola?
+A: Send a short overview of your project via the contact form at nikolamiljkovic.live/contact. He'll follow up with details needed, then prepare a proposal and timeline.
