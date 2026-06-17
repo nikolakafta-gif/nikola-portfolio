@@ -1,23 +1,21 @@
 ---
-import { GlobeBars } from "./ui/cobe-globe-bars"
 ---
 
 <section class="location">
   <div class="location__inner container">
     <div class="location__content">
-      <div class="location__text">
-        <p class="location__label" data-fade-up>Based in</p>
+      <p class="location__label" data-fade-up>Based in</p>
+      <div class="location__row">
         <h2 class="location__heading" data-fade-up>Niš, <span class="location__italic">Serbia</span></h2>
-        <p class="location__desc" data-fade-up>Available for remote work worldwide. Let's connect regardless of timezone.</p>
-        <div class="location__timezone" data-fade-up>
-          <span class="location__tz-dot"></span>
-          <span class="location__tz-label">CET</span>
-          <span class="location__tz-sep">·</span>
-          <time class="location__tz-time" id="location-clock">--:--:--</time>
+        <div class="location__right" data-fade-up>
+          <p class="location__desc">Available for remote work worldwide. Let's connect regardless of timezone.</p>
+          <div class="location__timezone">
+            <span class="location__tz-dot"></span>
+            <span class="location__tz-label">CET</span>
+            <span class="location__tz-sep">·</span>
+            <time class="location__tz-time" id="location-clock">--:--:--</time>
+          </div>
         </div>
-      </div>
-      <div class="location__globe">
-        <GlobeBars client:load targetPhi={1.35} targetTheta={0.25} />
       </div>
     </div>
   </div>
@@ -54,15 +52,22 @@ import { GlobeBars } from "./ui/cobe-globe-bars"
 
   .location__content {
     display: flex;
-    align-items: center;
-    gap: 4em;
+    flex-direction: column;
+    gap: 0.75em;
   }
 
-  .location__text {
+  .location__row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .location__right {
     flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.75em;
+    margin-top: -2.75em;
   }
 
   .location__label {
@@ -75,6 +80,7 @@ import { GlobeBars } from "./ui/cobe-globe-bars"
   }
 
   .location__heading {
+    flex: 1;
     font-family: var(--font-body);
     color: var(--color-primary);
     font-size: 4em;
@@ -141,65 +147,46 @@ import { GlobeBars } from "./ui/cobe-globe-bars"
     letter-spacing: 0.5px;
   }
 
-  .location__globe {
-    flex: 1;
-    min-width: 20em;
-    max-width: 28em;
-  }
 
   @media (max-width: 991px) {
     .location {
-      padding-top: 2.5em;
+      padding-top: 5em;
+      padding-bottom: 5em;
     }
 
     .location__content {
-      flex-direction: column;
       align-items: center;
       text-align: center;
-      gap: 2em;
     }
 
-    .location__text {
+    .location__row {
+      flex-direction: column;
       align-items: center;
+      gap: 2.5em;
+    }
+
+    .location__right {
+      align-items: center;
+      margin-top: 0;
     }
 
     .location__heading {
       font-size: 3em;
     }
 
-    .location__timezone {
-      align-self: center;
-    }
-
-    .location__globe {
-      flex: none;
-      width: 100%;
-      max-width: 20em;
-      align-self: center;
-    }
-
     .location__desc {
-      max-width: 100%;
+      max-width: 20em;
     }
   }
 
   @media (max-width: 767px) {
     .location {
-      padding-top: 3.75em;
+      padding-top: 4em;
+      padding-bottom: 4em;
     }
 
     .location__heading {
       font-size: 2.5em;
-    }
-
-    .location__globe {
-      max-width: 16em;
-    }
-  }
-
-  @media (max-width: 479px) {
-    .location__globe {
-      max-width: 14em;
     }
   }
 </style>

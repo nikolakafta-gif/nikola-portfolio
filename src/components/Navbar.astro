@@ -26,21 +26,18 @@ const navLinks = [
     </ul>
     <div class="navbar__actions">
       <button class="navbar__menu-toggle" aria-label="Open menu">
-        <img src="/assets/images/icon-menu.svg" alt="" width="24" height="24" />
+        <div class="navbar__burger">
+          <div class="navbar__burger-line"></div>
+          <div class="navbar__burger-line"></div>
+          <div class="navbar__burger-line"></div>
+        </div>
       </button>
       {isHome && <ButtonExpand href="/contact" label="Let's Collaborate" variant="dark" />}
     </div>
   </nav>
 
-  <div class="navbar__overlay" aria-hidden="true"></div>
   <div class="navbar__mobile-menu" aria-hidden="true">
     <div class="navbar__mobile-inner">
-      <div class="navbar__mobile-header">
-        <p class="navbar__mobile-title">Menu</p>
-        <button class="navbar__menu-close" aria-label="Close menu">
-          <img src="/assets/images/icon-close.svg" alt="" width="16" height="16" />
-        </button>
-      </div>
       <div class="navbar__mobile-links">
         {navLinks.map((link) => (
           <a href={link.href} class="navbar__mobile-link">{link.label}</a>
@@ -52,26 +49,35 @@ const navLinks = [
 
 <script>
   const toggle = document.querySelector('.navbar__menu-toggle');
-  const close = document.querySelector('.navbar__menu-close');
-  const overlay = document.querySelector('.navbar__overlay');
   const menu = document.querySelector('.navbar__mobile-menu');
   const mobileLinks = document.querySelectorAll('.navbar__mobile-link');
 
   function openMenu() {
+    mobileLinks.forEach((link, i) => {
+      const el = link as HTMLElement;
+      el.style.transitionDelay = `${0.15 + (mobileLinks.length - 1 - i) * 0.06}s`;
+    });
     menu?.classList.add('is-open');
-    overlay?.classList.add('is-open');
+    toggle?.classList.add('is-open');
     document.body.style.overflow = 'hidden';
   }
 
   function closeMenu() {
+    mobileLinks.forEach(link => {
+      (link as HTMLElement).style.transitionDelay = '0s';
+    });
     menu?.classList.remove('is-open');
-    overlay?.classList.remove('is-open');
+    toggle?.classList.remove('is-open');
+    toggle?.classList.add('is-closing');
     document.body.style.overflow = '';
+    setTimeout(() => toggle?.classList.remove('is-closing'), 350);
   }
 
-  toggle?.addEventListener('click', openMenu);
-  close?.addEventListener('click', closeMenu);
-  overlay?.addEventListener('click', closeMenu);
+  function toggleMenu() {
+    menu?.classList.contains('is-open') ? closeMenu() : openMenu();
+  }
+
+  toggle?.addEventListener('click', toggleMenu);
   mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
 </script>
 
@@ -156,10 +162,80 @@ const navLinks = [
     border: none;
     cursor: pointer;
     padding: 0.5em;
+    z-index: 100;
+    position: relative;
   }
 
-  .navbar__overlay {
-    display: none;
+  .navbar__burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 24px;
+    height: 24px;
+  }
+
+  @keyframes burger-top {
+    from { transform: translateY(0) rotate(0deg); }
+    to { transform: translateY(7px) rotate(45deg); }
+  }
+
+  @keyframes burger-top-reverse {
+    from { transform: translateY(7px) rotate(45deg); }
+    to { transform: translateY(0) rotate(0deg); }
+  }
+
+  @keyframes burger-mid {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  @keyframes burger-mid-reverse {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes burger-bottom {
+    from { transform: translateY(0) rotate(0deg); }
+    to { transform: translateY(-7px) rotate(-45deg); }
+  }
+
+  @keyframes burger-bottom-reverse {
+    from { transform: translateY(-7px) rotate(-45deg); }
+    to { transform: translateY(0) rotate(0deg); }
+  }
+
+  .navbar__burger-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-primary);
+    border-radius: 2px;
+    transform-origin: center;
+  }
+
+  .navbar__menu-toggle.is-open .navbar__burger-line:nth-child(1) {
+    animation: burger-top 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .navbar__menu-toggle.is-open .navbar__burger-line:nth-child(2) {
+    animation: burger-mid 0.2s ease forwards;
+  }
+
+  .navbar__menu-toggle.is-open .navbar__burger-line:nth-child(3) {
+    animation: burger-bottom 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .navbar__menu-toggle.is-closing .navbar__burger-line:nth-child(1) {
+    animation: burger-top-reverse 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .navbar__menu-toggle.is-closing .navbar__burger-line:nth-child(2) {
+    animation: burger-mid-reverse 0.2s ease forwards;
+  }
+
+  .navbar__menu-toggle.is-closing .navbar__burger-line:nth-child(3) {
+    animation: burger-bottom-reverse 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .navbar__mobile-menu {
@@ -171,40 +247,36 @@ const navLinks = [
       display: none;
     }
 
+    .navbar__inner {
+      z-index: 100;
+    }
+
     .navbar__menu-toggle {
       display: flex;
+    }
+
+    .navbar__actions {
+      animation: none;
     }
 
     .navbar__actions :global(.btn-expand) {
       display: none;
     }
 
-    .navbar__overlay {
-      display: none;
+    .navbar__mobile-menu {
+      display: flex;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 40;
-    }
-
-    .navbar__overlay.is-open {
-      display: block;
-    }
-
-    .navbar__mobile-menu {
-      display: flex;
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 100%;
-      max-width: 300px;
-      height: 100vh;
+      height: 100dvh;
       z-index: 99;
-      transform: translateX(100%);
-      transition: transform var(--transition-smooth);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      transform: translateX(-100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .navbar__mobile-menu.is-open {
@@ -212,53 +284,56 @@ const navLinks = [
     }
 
     .navbar__mobile-inner {
-      background-color: var(--color-white);
       width: 100%;
-      max-width: 300px;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      right: 0;
-    }
-
-    .navbar__mobile-header {
+      height: 100%;
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      width: 100%;
-      padding: 0 1em;
-      margin-top: 0.625em;
-      margin-bottom: 0.625em;
-    }
-
-    .navbar__mobile-title {
-      font-family: var(--font-body);
-      font-size: 1em;
-      font-weight: 600;
-      color: var(--color-primary);
-      margin-bottom: 0;
-    }
-
-    .navbar__menu-close {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0.25em;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 10vh;
     }
 
     .navbar__mobile-links {
       display: flex;
       flex-direction: column;
-      gap: 1em;
+      align-items: center;
+      gap: 0;
       width: 100%;
-      padding: 0 1em;
+      padding: 0 3em;
     }
 
     .navbar__mobile-link {
       font-family: var(--font-body);
-      font-size: 1em;
+      font-size: 2.5em;
+      font-weight: 500;
       color: var(--color-primary);
       text-decoration: none;
+      padding: 0.35em 0;
+      opacity: 0;
+      transform: translateY(1.5em);
+      transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+    }
+
+    .navbar__mobile-link:hover {
+      color: var(--color-primary);
+    }
+
+    .navbar__mobile-menu.is-open .navbar__mobile-link {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .navbar__mobile-link {
+      font-size: 2em;
+    }
+
+    .navbar__mobile-links {
+      padding: 0 2em;
+    }
+
+    .navbar__mobile-inner {
+      padding-bottom: 8vh;
     }
   }
 

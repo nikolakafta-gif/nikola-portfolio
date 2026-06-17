@@ -189,7 +189,7 @@ const contactSchema = {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
     gap: 4em;
-    align-items: start;
+    align-items: stretch;
   }
 
   /* Info cards */
@@ -271,6 +271,14 @@ const contactSchema = {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+  }
+
+  .contact-form__group:has(.contact-form__textarea) {
+    flex: 1;
+  }
+
+  .contact-form__textarea {
+    flex: 1;
   }
 
   .contact-form__label {

@@ -1,5 +1,36 @@
 ---
-import WorkStack from "./WorkStack";
+const projects = [
+  {
+    title: "Comira",
+    imageSrc: "/assets/images/work-comira.webp",
+    href: "/blog/comira",
+    tag: "Web Development",
+  },
+  {
+    title: "Doorly",
+    imageSrc: "/assets/images/work-doorly.webp",
+    href: "/blog/doorly",
+    tag: "Web Development",
+  },
+  {
+    title: "Vistal",
+    imageSrc: "/assets/images/work-vistal.webp",
+    href: "/blog/vistal",
+    tag: "Web Development",
+  },
+  {
+    title: "Casera",
+    imageSrc: "/assets/images/work-casera.webp",
+    href: "/blog/casera",
+    tag: "Web Development",
+  },
+  {
+    title: "Advisia",
+    imageSrc: "/assets/images/work-advisia.webp",
+    href: "/blog/advisia",
+    tag: "Web Development",
+  },
+];
 ---
 
 <section class="work" id="work">
@@ -8,12 +39,99 @@ import WorkStack from "./WorkStack";
       <div class="work__header">
         <h2 class="work__heading" data-fade-up>How I transformed a small business's into <span class="work__italic">online presence</span></h2>
       </div>
-      <div class="work__stack" data-fade-up>
-        <WorkStack client:visible />
+    </div>
+  </div>
+
+  <div class="work__slider" data-fade-up>
+    <div class="work__fade work__fade--left"></div>
+    <div class="work__fade work__fade--right"></div>
+    <div class="swiper work-swiper">
+      <div class="swiper-wrapper">
+        {projects.map((project) => (
+          <div class="swiper-slide">
+            <a href={project.href} class="work__card">
+              <img src={project.imageSrc} alt={project.title} class="work__card-img" loading="lazy" draggable="false" />
+              <div class="work__card-overlay">
+                <div class="work__card-info">
+                  <span class="work__card-tag">{project.tag}</span>
+                  <span class="work__card-title">{project.title}</span>
+                </div>
+                <span class="work__card-view">
+                  View
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
+                </span>
+              </div>
+            </a>
+            <div class="work__card-bottom">
+              <div class="work__card-bottom-info">
+                <span class="work__card-bottom-tag">{project.tag}</span>
+                <span class="work__card-bottom-title">{project.title}</span>
+              </div>
+              <a href={project.href} class="work__card-bottom-view">
+                View
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        ))}
       </div>
+    </div>
+    <div class="work__nav" data-fade-up>
+      <button class="work__nav-btn work-prev" aria-label="Previous project">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+      <button class="work__nav-btn work-next" aria-label="Next project">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
     </div>
   </div>
 </section>
+
+<script>
+  import Swiper from "swiper";
+  import { Navigation } from "swiper/modules";
+  import "swiper/css";
+
+  new Swiper(".work-swiper", {
+    modules: [Navigation],
+    slidesPerView: 3,
+    spaceBetween: 24,
+    speed: 600,
+    grabCursor: true,
+    navigation: {
+      prevEl: ".work-prev",
+      nextEl: ".work-next",
+    },
+    breakpoints: {
+      0: {
+        slidesPerView: 1.2,
+        spaceBetween: 12,
+      },
+      480: {
+        slidesPerView: 1.5,
+        spaceBetween: 16,
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      992: {
+        slidesPerView: 3,
+        spaceBetween: 24,
+      },
+    },
+  });
+</script>
 
 <style>
   .work {
@@ -55,8 +173,153 @@ import WorkStack from "./WorkStack";
     letter-spacing: -1px;
   }
 
-  .work__stack {
+  /* Slider wrapper */
+  .work__slider {
+    position: relative;
+    margin-top: 3em;
+    padding-inline: var(--container-padding, 3.25em);
+  }
+
+  /* Fade overlays */
+  .work__fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 6em;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .work__fade--left {
+    left: 0;
+    background: linear-gradient(to right, var(--color-bg, #fff) 0%, transparent 100%);
+  }
+
+  .work__fade--right {
+    right: 0;
+    background: linear-gradient(to left, var(--color-bg, #fff) 0%, transparent 100%);
+  }
+
+  /* Cards */
+  .work__card {
+    display: block;
+    position: relative;
+    border-radius: 1em;
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    text-decoration: none;
+    border: 1px solid var(--color-primary-10, rgba(27, 29, 30, 0.1));
+  }
+
+  .work__card-img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .work__card:hover .work__card-img {
+    transform: scale(1.03);
+  }
+
+  .work__card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 1.5em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .work__card:hover .work__card-overlay {
+    opacity: 1;
+  }
+
+  .work__card-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .work__card-tag {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.75em;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.35em;
+  }
+
+  .work__card-title {
+    color: #fff;
+    font-size: 1.25em;
+    font-weight: 600;
+  }
+
+  .work__card-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    color: #fff;
+    font-size: 1em;
+    font-weight: 500;
+    padding: 0.6em 2em;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+
+  .work__card-view:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Mobile card info bar — hidden on desktop */
+  .work__card-bottom {
+    display: none;
+  }
+
+  /* Nav arrows */
+  .work__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25em;
+    margin-top: 2.5em;
+  }
+
+  .work__nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75em;
+    height: 2.75em;
+    border-radius: 50%;
+    border: 1px solid var(--color-primary-10, rgba(27, 29, 30, 0.1));
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    cursor: pointer;
+    color: var(--color-primary, #1b1d1e);
+    transition: transform 0.25s ease, background 0.2s ease;
+  }
+
+  .work__nav-btn:hover {
+    transform: scale(1.15);
+    background: rgba(255, 255, 255, 0.65);
+  }
+
+  .work__nav-btn:global(.swiper-button-disabled) {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .work__nav-btn:global(.swiper-button-disabled):hover {
+    transform: none;
+    background: rgba(255, 255, 255, 0.4);
   }
 
   @media (max-width: 991px) {
@@ -72,11 +335,92 @@ import WorkStack from "./WorkStack";
       max-width: 500px;
       font-size: 2.25em;
     }
+
+    .work__slider {
+      margin-top: 2em;
+    }
+
+    .work__fade {
+      width: 3em;
+    }
+
+    .work__nav-btn {
+      width: 2.5em;
+      height: 2.5em;
+    }
+
+    .work__nav-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .work__card-overlay {
+      display: none;
+    }
+
+    .work__card:hover .work__card-img {
+      transform: none;
+    }
+
+    .work__card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75em 0.25em;
+    }
+
+    .work__card-bottom-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15em;
+    }
+
+    .work__card-bottom-tag {
+      font-size: 0.65em;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-primary-40);
+    }
+
+    .work__card-bottom-title {
+      font-size: 1em;
+      font-weight: 600;
+      color: var(--color-primary);
+    }
+
+    .work__card-bottom-view {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      font-size: 0.8em;
+      font-weight: 500;
+      color: var(--color-primary);
+      text-decoration: none;
+      padding: 0.5em 1.25em;
+      border-radius: 999px;
+      border: 1px solid var(--color-primary-10, rgba(27, 29, 30, 0.1));
+      white-space: nowrap;
+    }
   }
 
   @media (max-width: 767px) {
     .work {
       padding-top: 3.75em;
+    }
+
+    .work__fade {
+      width: 2em;
+    }
+
+    .work__nav-btn {
+      width: 2.25em;
+      height: 2.25em;
+    }
+
+    .work__nav-btn svg {
+      width: 14px;
+      height: 14px;
     }
   }
 </style>
