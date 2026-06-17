@@ -90,7 +90,11 @@ const contactSchema = {
             </div>
           </div>
 
-          <form class="contact-form" data-fade-up>
+          <form class="contact-form" data-fade-up id="contact-form">
+            <input type="hidden" name="access_key" value="4dc1e20c-d25d-4a81-b567-d9295dcec55a" />
+            <input type="hidden" name="subject" value="New message from nikolamiljkovic.live" />
+            <input type="hidden" name="from_name" value="Portfolio Contact Form" />
+            <input type="checkbox" name="botcheck" class="contact-form__honeypot" />
             <div class="contact-form__group">
               <label for="name" class="contact-form__label">Name</label>
               <input type="text" id="name" name="name" class="contact-form__input" placeholder="Your name" required />
@@ -117,6 +121,7 @@ const contactSchema = {
             <div class="contact-form__submit">
               <ButtonExpand href="#" label="Send message" variant="dark" />
             </div>
+            <div class="contact-form__result" id="form-result"></div>
           </form>
         </div>
       </div>
@@ -124,6 +129,55 @@ const contactSchema = {
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const result = document.getElementById('form-result') as HTMLElement;
+  const submitBtn = form?.querySelector('.contact-form__submit [data-btn-expand]') as HTMLAnchorElement;
+
+  if (form && submitBtn) {
+    submitBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submitBtn.style.pointerEvents = 'none';
+      submitBtn.style.opacity = '0.6';
+      result.textContent = '';
+      result.className = 'contact-form__result';
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          result.textContent = 'Message sent! I\'ll get back to you soon.';
+          result.classList.add('contact-form__result--success');
+          form.reset();
+        } else {
+          result.textContent = 'Something went wrong. Please try again or email me directly.';
+          result.classList.add('contact-form__result--error');
+        }
+      } catch {
+        result.textContent = 'Something went wrong. Please try again or email me directly.';
+        result.classList.add('contact-form__result--error');
+      } finally {
+        submitBtn.style.pointerEvents = '';
+        submitBtn.style.opacity = '';
+      }
+    });
+  }
+</script>
 
 <style>
   /* Hero */
@@ -322,8 +376,36 @@ const contactSchema = {
     min-height: 8em;
   }
 
+  .contact-form__honeypot {
+    display: none !important;
+  }
+
   .contact-form__submit {
     margin-top: 0.5em;
+  }
+
+  .contact-form__result {
+    font-family: var(--font-body);
+    font-size: 0.9375em;
+    font-weight: 500;
+    padding: 0.875em 1em;
+    border-radius: var(--radius-md);
+    display: none;
+  }
+
+  .contact-form__result--success,
+  .contact-form__result--error {
+    display: block;
+  }
+
+  .contact-form__result--success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .contact-form__result--error {
+    background-color: #fce4ec;
+    color: #c62828;
   }
 
   /* Tablet */
