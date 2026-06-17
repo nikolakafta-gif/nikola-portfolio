@@ -25,7 +25,7 @@ const navLinks = [
       ))}
     </ul>
     <div class="navbar__actions">
-      <button class="navbar__menu-toggle" aria-label="Open menu">
+      <button class="navbar__menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
         <div class="navbar__burger">
           <div class="navbar__burger-line"></div>
           <div class="navbar__burger-line"></div>
@@ -36,7 +36,7 @@ const navLinks = [
     </div>
   </nav>
 
-  <div class="navbar__mobile-menu" aria-hidden="true">
+  <div class="navbar__mobile-menu" id="mobile-menu" aria-hidden="true">
     <div class="navbar__mobile-inner">
       <div class="navbar__mobile-links">
         {navLinks.map((link) => (
@@ -58,7 +58,10 @@ const navLinks = [
       el.style.transitionDelay = `${0.15 + (mobileLinks.length - 1 - i) * 0.06}s`;
     });
     menu?.classList.add('is-open');
+    menu?.setAttribute('aria-hidden', 'false');
     toggle?.classList.add('is-open');
+    toggle?.setAttribute('aria-expanded', 'true');
+    toggle?.setAttribute('aria-label', 'Close menu');
     document.body.style.overflow = 'hidden';
   }
 
@@ -67,7 +70,10 @@ const navLinks = [
       (link as HTMLElement).style.transitionDelay = '0s';
     });
     menu?.classList.remove('is-open');
+    menu?.setAttribute('aria-hidden', 'true');
     toggle?.classList.remove('is-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Open menu');
     toggle?.classList.add('is-closing');
     document.body.style.overflow = '';
     setTimeout(() => toggle?.classList.remove('is-closing'), 350);

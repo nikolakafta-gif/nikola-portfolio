@@ -50,7 +50,7 @@ const projects = [
         {projects.map((project) => (
           <div class="swiper-slide">
             <a href={project.href} class="work__card">
-              <img src={project.imageSrc} alt={project.title} class="work__card-img" loading="lazy" draggable="false" />
+              <img src={project.imageSrc} alt={`${project.title} website preview`} class="work__card-img" width="600" height="400" loading="lazy" draggable="false" />
               <div class="work__card-overlay">
                 <div class="work__card-info">
                   <span class="work__card-tag">{project.tag}</span>
