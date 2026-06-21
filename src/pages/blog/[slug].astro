@@ -27,6 +27,26 @@ const { content, ...entry } = post;
 const transformed = Markdoc.transform(content.node);
 const renderedContent = Markdoc.renderers.html(transformed);
 
+const allPosts = await reader.collections.posts.all();
+const relatedPosts = allPosts
+  .filter((p) => p.slug !== slug && !p.entry.draft)
+  .sort(() => 0.5 - Math.random())
+  .slice(0, 2);
+
+const faqs = entry.faqs || [];
+const faqSchema = faqs.length > 0 ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq: { question: string; answer: string }) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+} : null;
+
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "Article",
@@ -91,7 +111,7 @@ const formattedDate = entry.publishedDate
   title={`${entry.title} — Case Study | Nikola Miljković`}
   description={entry.summary || `Case study: ${entry.title}`}
   schema={articleSchema}
-  extraSchemas={[breadcrumbSchema]}
+  extraSchemas={[breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
 >
   <Navbar />
   <main id="main-content">
@@ -167,6 +187,7 @@ const formattedDate = entry.publishedDate
               src={entry.coverImage}
               alt={`${entry.title} project screenshot`}
               class="case-study__cover-image"
+              loading="lazy"
               width="1200"
               height="680"
             />
@@ -180,6 +201,52 @@ const formattedDate = entry.publishedDate
         </div>
       </div>
     </article>
+
+    {faqs.length > 0 && (
+      <section class="faq">
+        <div class="faq__inner container">
+          <h2 class="faq__heading">Frequently asked questions</h2>
+          <dl class="faq__list">
+            {faqs.map((faq: { question: string; answer: string }) => (
+              <div class="faq__item">
+                <dt class="faq__question">{faq.question}</dt>
+                <dd class="faq__answer">{faq.answer}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )}
+
+    {relatedPosts.length > 0 && (
+      <section class="related">
+        <div class="related__inner container">
+          <h2 class="related__heading">More case studies</h2>
+          <div class="related__grid">
+            {relatedPosts.map((rp) => (
+              <a href={`/blog/${rp.slug}`} class="related__card">
+                {rp.entry.coverImage && (
+                  <div class="related__image-wrap">
+                    <img
+                      src={rp.entry.coverImage}
+                      alt={rp.entry.title}
+                      class="related__image"
+                      loading="lazy"
+                      width="600"
+                      height="340"
+                    />
+                  </div>
+                )}
+                <div class="related__body">
+                  <h3 class="related__title">{rp.entry.title}</h3>
+                  {rp.entry.summary && <p class="related__summary">{rp.entry.summary}</p>}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
 
     <Cta />
   </main>
@@ -417,6 +484,137 @@ const formattedDate = entry.publishedDate
     margin: 1.5em 0;
   }
 
+  .faq {
+    padding-bottom: 3em;
+  }
+
+  .faq__inner {
+    max-width: 800px;
+  }
+
+  .faq__heading {
+    font-family: var(--font-body);
+    font-size: 2em;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-primary);
+    margin: 0 0 1.5em;
+  }
+
+  .faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    margin: 0;
+  }
+
+  .faq__item {
+    padding-bottom: 1.5em;
+    border-bottom: 1px solid var(--color-primary-10);
+  }
+
+  .faq__item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .faq__question {
+    font-family: var(--font-body);
+    font-size: 1.125em;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-primary);
+    margin: 0 0 0.5em;
+  }
+
+  .faq__answer {
+    font-family: var(--font-body);
+    font-size: 1em;
+    line-height: 1.7;
+    color: var(--color-primary-60);
+    margin: 0;
+  }
+
+  .related {
+    padding-bottom: 2em;
+  }
+
+  .related__inner {
+    max-width: 800px;
+  }
+
+  .related__heading {
+    font-family: var(--font-body);
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin: 0 0 1.5em;
+  }
+
+  .related__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5em;
+  }
+
+  .related__card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-primary-10);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow var(--transition-smooth), transform var(--transition-smooth);
+  }
+
+  .related__card:hover {
+    box-shadow: var(--shadow-card);
+    transform: translateY(-3px);
+  }
+
+  .related__image-wrap {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background-color: var(--color-primary-05);
+  }
+
+  .related__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-smooth);
+  }
+
+  .related__card:hover .related__image {
+    transform: scale(1.03);
+  }
+
+  .related__body {
+    padding: 1.25em;
+  }
+
+  .related__title {
+    font-family: var(--font-body);
+    font-size: 1.125em;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-primary);
+    margin: 0 0 0.5em;
+  }
+
+  .related__summary {
+    font-family: var(--font-body);
+    font-size: 0.875em;
+    line-height: 1.5;
+    color: var(--color-primary-60);
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
   @media (max-width: 991px) {
     .case-study__header {
       padding-top: 10em;
@@ -464,6 +662,10 @@ const formattedDate = entry.publishedDate
 
     .case-study__content-inner {
       max-width: 100%;
+    }
+
+    .related__grid {
+      grid-template-columns: 1fr;
     }
 
     .prose :global(h2) {

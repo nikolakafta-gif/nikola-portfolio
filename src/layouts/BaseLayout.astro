@@ -42,7 +42,6 @@ const defaultSchema = {
     "sameAs": [
       "https://www.linkedin.com/in/nikola-miljkovic-542456108/",
       "https://www.instagram.com/nidza____/",
-      "https://dribbble.com/nikola-miljkovic",
       "https://www.behance.net/nikolamiljkovic5"
     ]
   },
@@ -64,7 +63,6 @@ const defaultSchema = {
   "sameAs": [
     "https://www.linkedin.com/in/nikola-miljkovic-542456108/",
     "https://www.instagram.com/nidza____/",
-    "https://dribbble.com/nikola-miljkovic",
     "https://www.behance.net/nikolamiljkovic5"
   ]
 };
@@ -106,18 +104,31 @@ const pageSchema = schema || defaultSchema;
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <title>{title}</title>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9HHYCK1DJM"></script>
+    <!-- Google Analytics (deferred to improve LCP) -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'G-9HHYCK1DJM');
+      (function(){
+        var s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-9HHYCK1DJM';
+        s.async = true;
+        document.head.appendChild(s);
+      })();
     </script>
 
     <!-- JSON-LD Schema -->

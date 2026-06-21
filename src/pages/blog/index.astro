@@ -36,12 +36,29 @@ const breadcrumbSchema = {
     },
   ],
 };
+
+const collectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Case Studies",
+  description: "See how I build pixel-perfect websites for real clients. Detailed case studies with challenges, solutions, and live results from Astro and Webflow projects.",
+  url: "https://www.nikolamiljkovic.live/blog/",
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: posts.map((post, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `https://www.nikolamiljkovic.live/blog/${post.slug}/`,
+      name: post.entry.title,
+    })),
+  },
+};
 ---
 
 <BaseLayout
-  title="Case Studies | Nikola Miljković"
-  description="Explore my recent web development projects — real case studies with detailed breakdowns of the challenge, approach, and results."
-  extraSchemas={[breadcrumbSchema]}
+  title="Web Development Case Studies | Nikola Miljković"
+  description="See how I build pixel-perfect websites for real clients. Detailed case studies with challenges, solutions, and live results from Astro and Webflow projects."
+  extraSchemas={[breadcrumbSchema, collectionSchema]}
 >
   <Navbar />
   <main id="main-content">

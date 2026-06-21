@@ -27,6 +27,16 @@ export default config({
         liveUrl: fields.url({ label: 'Live site URL' }),
         duration: fields.text({ label: 'Project duration' }),
         draft: fields.checkbox({ label: 'Draft', defaultValue: false }),
+        faqs: fields.array(
+          fields.object({
+            question: fields.text({ label: 'Question' }),
+            answer: fields.text({ label: 'Answer', multiline: true }),
+          }),
+          {
+            label: 'FAQ',
+            itemLabel: (props) => props.fields.question.value,
+          }
+        ),
         content: fields.markdoc({ label: 'Content' }),
       },
     }),

@@ -1,0 +1,92 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import ButtonExpand from "../components/ButtonExpand.astro";
+---
+
+<BaseLayout title="Page Not Found | Nikola Miljković" description="The page you're looking for doesn't exist or has been moved.">
+  <Navbar />
+  <main id="main-content">
+    <section class="not-found">
+      <div class="not-found__inner container">
+        <p class="not-found__code">404</p>
+        <h1 class="not-found__heading">Page not <span class="not-found__italic">found</span></h1>
+        <p class="not-found__text">The page you're looking for doesn't exist or has been moved.</p>
+        <div class="not-found__action">
+          <ButtonExpand href="/" label="Back to homepage" variant="dark" />
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-top: 12em;
+    padding-bottom: var(--spacing-section);
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .not-found__inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .not-found__code {
+    font-family: var(--font-body);
+    font-size: 1em;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 1.5em;
+  }
+
+  .not-found__heading {
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    font-size: 4em;
+    font-weight: 500;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  .not-found__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  .not-found__text {
+    color: var(--color-primary-60);
+    font-size: 1.125em;
+    line-height: 1.5;
+    max-width: 450px;
+    margin: 1.5em 0 0;
+  }
+
+  .not-found__action {
+    margin-top: 2.5em;
+  }
+
+  @media (max-width: 767px) {
+    .not-found {
+      padding-top: 8.75em;
+    }
+
+    .not-found__heading {
+      font-size: 2.5em;
+    }
+
+    .not-found__text {
+      font-size: 1em;
+    }
+  }
+</style>

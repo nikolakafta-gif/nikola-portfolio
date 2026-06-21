@@ -11,7 +11,12 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   site: 'https://www.nikolamiljkovic.live',
   adapter: vercel(),
-  integrations: [react(), markdoc(), keystatic(), sitemap()],
+  integrations: [react(), markdoc(), keystatic(), sitemap({
+    serialize(item) {
+      item.lastmod = new Date();
+      return item;
+    },
+  })],
   vite: {
     plugins: [tailwindcss()],
   },
