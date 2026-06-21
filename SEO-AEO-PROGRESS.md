@@ -4,7 +4,7 @@
 **Site:** https://www.nikolamiljkovic.live
 **About:** Portfolio site for web development services — full website builds, redesigns, landing pages, Webflow development. Targeting international clients.
 **Started:** 2026-06-21
-**Current phase:** 04
+**Current phase:** 05
 
 ## Pre-existing SEO work
 
@@ -24,7 +24,7 @@
 - [x] 01 — Technical SEO
 - [x] 02 — Keyword Strategy
 - [x] 03 — AEO Content
-- [ ] 04 — Link Building Foundation
+- [x] 04 — Link Building Foundation
 - [ ] 05 — Content Production
 - [ ] 06 — Brand & Entity
 - [ ] 07 — Schema & AI Access
@@ -97,4 +97,13 @@
 - AEO visibility recheck: site:nikolamiljkovic.live still returns 0 Google results, brand confused with photographer at .com
 - No AI engine citations yet (expected -- site just indexed Jun 19)
 
-**Current phase:** 04
+### Phase 04 (2026-06-21)
+- Competitor analysis: Ilja van Eck and Cubic Dev do zero link building, no blog, no directories
+- 15 niche directories identified for submission (Awwwards, Clutch, Dribbble, Behance, Contra, DesignRush, Astro Showcase, dev.to, Hashnode, etc.)
+- 20 link building prospects found: portfolio roundup sites, developer publications, Astro ecosystem
+- 3 outreach email templates written (broken link, resource page, guest post)
+- 5 linkable asset ideas: Website Cost Calculator (#1 priority), process infographic, cost guide, Astro vs Next.js benchmarks, free audit checklist
+- 4-week action plan created with weekly tasks
+- Deliverable: LINK-BUILDING-PLAN.md
+
+**Current phase:** 05
