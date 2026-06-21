@@ -98,6 +98,8 @@ const breadcrumbSchema = {
   ],
 };
 
+const isCaseStudy = !!entry.client;
+
 const formattedDate = entry.publishedDate
   ? new Date(entry.publishedDate).toLocaleDateString("en-US", {
       year: "numeric",
@@ -108,8 +110,8 @@ const formattedDate = entry.publishedDate
 ---
 
 <BaseLayout
-  title={`${entry.title} — Case Study | Nikola Miljković`}
-  description={entry.summary || `Case study: ${entry.title}`}
+  title={`${entry.title} — ${isCaseStudy ? 'Case Study' : 'Blog'} | Nikola Miljković`}
+  description={entry.summary || entry.title}
   schema={articleSchema}
   extraSchemas={[breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
 >
@@ -123,7 +125,7 @@ const formattedDate = entry.publishedDate
               <path d="m12 19-7-7 7-7" />
               <path d="M19 12H5" />
             </svg>
-            All case studies
+            {isCaseStudy ? 'All case studies' : 'All articles'}
           </a>
           <h1 class="case-study__title" data-fade-up>{entry.title}</h1>
           {entry.summary && (
@@ -221,7 +223,7 @@ const formattedDate = entry.publishedDate
     {relatedPosts.length > 0 && (
       <section class="related">
         <div class="related__inner container">
-          <h2 class="related__heading">More case studies</h2>
+          <h2 class="related__heading">{isCaseStudy ? 'More case studies' : 'More articles'}</h2>
           <div class="related__grid">
             {relatedPosts.map((rp) => (
               <a href={`/blog/${rp.slug}`} class="related__card">
