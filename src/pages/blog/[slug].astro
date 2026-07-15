@@ -227,8 +227,8 @@ const formattedDate = entry.publishedDate
           <div class="related__grid">
             {relatedPosts.map((rp) => (
               <a href={`/blog/${rp.slug}`} class="related__card">
-                {rp.entry.coverImage && (
-                  <div class="related__image-wrap">
+                <div class="related__image-wrap">
+                  {rp.entry.coverImage ? (
                     <img
                       src={rp.entry.coverImage}
                       alt={rp.entry.title}
@@ -237,8 +237,12 @@ const formattedDate = entry.publishedDate
                       width="600"
                       height="340"
                     />
-                  </div>
-                )}
+                  ) : (
+                    <div class="related__placeholder" aria-hidden="true">
+                      <span class="related__placeholder-text">{rp.entry.title}</span>
+                    </div>
+                  )}
+                </div>
                 <div class="related__body">
                   <h3 class="related__title">{rp.entry.title}</h3>
                   {rp.entry.summary && <p class="related__summary">{rp.entry.summary}</p>}
@@ -595,6 +599,34 @@ const formattedDate = entry.publishedDate
 
   .related__card:hover .related__image {
     transform: scale(1.03);
+  }
+
+  .related__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.25em;
+    background:
+      radial-gradient(circle at 82% 12%, var(--color-accent-20), transparent 55%),
+      linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    transition: transform var(--transition-smooth);
+  }
+
+  .related__card:hover .related__placeholder {
+    transform: scale(1.03);
+  }
+
+  .related__placeholder-text {
+    font-family: var(--font-body);
+    font-size: 1.0625em;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-white);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .related__body {
