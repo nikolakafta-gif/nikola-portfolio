@@ -224,14 +224,18 @@ const collectionSchema = {
 
   .blog-card__image-wrap--placeholder {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-primary);
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 1.25em;
+    background:
+      radial-gradient(circle at 82% 12%, var(--color-accent-20), transparent 55%),
+      linear-gradient(135deg, var(--color-primary), var(--color-accent));
   }
 
   .blog-card__placeholder-text {
     font-family: var(--font-heading);
     font-size: 2em;
+    line-height: 1.1;
     color: var(--color-white);
     font-style: italic;
   }
