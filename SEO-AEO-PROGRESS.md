@@ -106,4 +106,11 @@
 - 4-week action plan created with weekly tasks
 - Deliverable: LINK-BUILDING-PLAN.md
 
+### Phase 05 (2026-07-21)
+- GSC review: "web-developer-cost" post getting impressions (1-5/query) for pricing-intent queries but 0 clicks — diagnosed title (78 chars) and meta description (224 chars) both exceeding Google's truncation limits
+- Fixed globally in `src/pages/blog/[slug].astro`: removed redundant "— Blog"/"— Case Study" title suffix, added `metaDescription()` helper to smart-truncate descriptions at 155 chars (word-boundary safe) — applies to all posts and case studies
+- Published Month 1 Week 3-4 article: "What to Look for in a Web Developer Before You Hire" at `/blog/what-to-look-for-in-a-web-developer` (Cluster 3, 1926 words, 8-question FAQ, answer-first intro, question-format H2s, 2 verified external citations)
+- Added reciprocal internal link from Advisia case study back to the new article (per CONTENT-STRATEGY.md internal linking plan)
+- Note for Phase 09: several case study titles (e.g. Advisia) are long even without the removed suffix — revisit for CTR when GSC has more position/CTR data
+
 **Current phase:** 05

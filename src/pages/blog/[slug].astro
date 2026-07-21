@@ -107,11 +107,17 @@ const formattedDate = entry.publishedDate
       day: "numeric",
     })
   : null;
+
+function metaDescription(text: string, maxLength = 155) {
+  if (text.length <= maxLength) return text;
+  const truncated = text.slice(0, maxLength + 1);
+  return truncated.slice(0, truncated.lastIndexOf(" ")).replace(/[,.;:]+$/, "") + "…";
+}
 ---
 
 <BaseLayout
-  title={`${entry.title} — ${isCaseStudy ? 'Case Study' : 'Blog'} | Nikola Miljković`}
-  description={entry.summary || entry.title}
+  title={`${entry.title} | Nikola Miljković`}
+  description={metaDescription(entry.summary || entry.title)}
   schema={articleSchema}
   extraSchemas={[breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
 >
