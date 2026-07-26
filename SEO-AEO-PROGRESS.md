@@ -114,5 +114,18 @@
 - Note for Phase 09: several case study titles (e.g. Advisia) are long even without the removed suffix — revisit for CTR when GSC has more position/CTR data
 - Google Indexing API fully configured: GCP project `level-hallway-450015-f6`, service account `indexing-bot@level-hallway-450015-f6.iam.gserviceaccount.com` added as Owner in GSC. Key stored at `.google-indexing-key.json` (gitignored). Fixed `.claude/scripts/google-index.js` -> renamed to `.cjs` (project's `"type": "module"` broke the CommonJS `require()` calls)
 - Submitted `/blog/what-to-look-for-in-a-web-developer` via Indexing API (2026-07-25) — use `node .claude/scripts/google-index.cjs <url>` for all future posts going forward
+- Submitted all 11 sitemap URLs via Indexing API (2026-07-25) after GSC showed 8 not indexed / 3 indexed
+
+### Lighthouse remediation (2026-07-26)
+Baseline: Performance 75, Accessibility 91, Best Practices 96, SEO 100, Agentic Browsing 1/3.
+- A11y: mobile menu used `aria-hidden="true"` while its links stayed keyboard-focusable — switched to `inert` (toggled in Navbar.astro's open/close handlers). Do not revert to aria-hidden.
+- A11y: `--color-primary-60` measured 4.47:1 on white, just under WCAG AA 4.5:1 — raised alpha `99` -> `a6` (5.28:1). One token fixed all three reported contrast failures (hero text, footer description, footer links). Comment in global.css explains why; don't "restore" 99.
+- Perf: added `srcset`/`sizes` to work cards (400/700/1120w) and about photo (500/600/800w). Mobile image payload ~442KB -> ~211KB. Variant files live beside originals as `<name>-<width>.webp`; regenerate them if a source image is replaced.
+- Perf: work-zvonacka-banja was the only 1440px source (141KB) -> downscaled to 1120px (63KB); about photo recompressed at q78.
+- Perf: `build.inlineStylesheets: 'always'` in astro.config.mjs removes three render-blocking CSS requests (~1s blocking on mobile).
+- Perf: gtag.js injection moved to `requestIdleCallback` after the load event (was injected during head parse).
+- Best practices: Behance icon source is square 512x512 but CSS stretched it to 2x2.2em — now 32x32 like LinkedIn. About photo width/height attrs corrected (were 890x800, actual 800x1067).
+- Agentic browsing: llms.txt had bare URLs only and failed the link check — rewritten with markdown links to pages, guides and case studies.
+- Not fixable without tradeoffs: gtag.js still ships ~73KB unused JS (inherent to GA); "Agentic Browsing" is an experimental Lighthouse category.
 
 **Current phase:** 05
