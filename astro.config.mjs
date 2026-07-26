@@ -11,6 +11,9 @@ import vercel from '@astrojs/vercel';
 export default defineConfig({
   site: 'https://www.nikolamiljkovic.live',
   adapter: vercel(),
+  build: {
+    inlineStylesheets: 'always',
+  },
   integrations: [react(), markdoc(), keystatic(), sitemap({
     serialize(item) {
       item.lastmod = new Date();

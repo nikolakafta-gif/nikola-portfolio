@@ -112,5 +112,7 @@
 - Published Month 1 Week 3-4 article: "What to Look for in a Web Developer Before You Hire" at `/blog/what-to-look-for-in-a-web-developer` (Cluster 3, 1926 words, 8-question FAQ, answer-first intro, question-format H2s, 2 verified external citations)
 - Added reciprocal internal link from Advisia case study back to the new article (per CONTENT-STRATEGY.md internal linking plan)
 - Note for Phase 09: several case study titles (e.g. Advisia) are long even without the removed suffix — revisit for CTR when GSC has more position/CTR data
+- Google Indexing API fully configured: GCP project `level-hallway-450015-f6`, service account `indexing-bot@level-hallway-450015-f6.iam.gserviceaccount.com` added as Owner in GSC. Key stored at `.google-indexing-key.json` (gitignored). Fixed `.claude/scripts/google-index.js` -> renamed to `.cjs` (project's `"type": "module"` broke the CommonJS `require()` calls)
+- Submitted `/blog/what-to-look-for-in-a-web-developer` via Indexing API (2026-07-25) — use `node .claude/scripts/google-index.cjs <url>` for all future posts going forward
 
 **Current phase:** 05

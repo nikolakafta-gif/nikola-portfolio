@@ -62,7 +62,17 @@ const projects = [
         {projects.map((project) => (
           <div class="swiper-slide">
             <a href={project.href} class="work__card">
-              <img src={project.imageSrc} alt={`${project.title} website preview`} class="work__card-img" width="600" height="400" loading="lazy" draggable="false" />
+              <img
+                src={project.imageSrc}
+                srcset={`${project.imageSrc.replace('.webp', '-400.webp')} 400w, ${project.imageSrc.replace('.webp', '-700.webp')} 700w, ${project.imageSrc} 1120w`}
+                sizes="(max-width: 479px) 80vw, (max-width: 767px) 62vw, (max-width: 991px) 48vw, 33vw"
+                alt={`${project.title} website preview`}
+                class="work__card-img"
+                width="600"
+                height="400"
+                loading="lazy"
+                draggable="false"
+              />
               <div class="work__card-overlay">
                 <div class="work__card-info">
                   <span class="work__card-tag">{project.tag}</span>

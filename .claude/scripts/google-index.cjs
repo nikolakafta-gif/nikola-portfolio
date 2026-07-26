@@ -9,7 +9,7 @@
  *   4. Set GOOGLE_INDEXING_KEY_PATH=/path/to/key.json  (or place key as .google-indexing-key.json in project root)
  *
  * Usage:
- *   node .claude/scripts/google-index.js https://example.com/page1 https://example.com/page2
+ *   node .claude/scripts/google-index.cjs https://example.com/page1 https://example.com/page2
  */
 
 const https = require('https');
@@ -131,7 +131,7 @@ async function main() {
   const urls = process.argv.slice(2).filter((a) => a.startsWith('http'));
 
   if (urls.length === 0) {
-    console.error('Usage: node .claude/scripts/google-index.js <url1> [url2] ...');
+    console.error('Usage: node .claude/scripts/google-index.cjs <url1> [url2] ...');
     process.exit(1);
   }
 

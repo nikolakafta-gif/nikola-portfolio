@@ -5,9 +5,11 @@
       <div class="about__image-wrap" data-curtain data-curtain-slow>
         <img
           src="/assets/images/about-nikola-new.webp"
+          srcset="/assets/images/about-nikola-new-500.webp 500w, /assets/images/about-nikola-new-600.webp 600w, /assets/images/about-nikola-new.webp 800w"
+          sizes="(max-width: 991px) 75vw, 70vw"
           alt="Nikola Miljkovic AI-Powered Web Developer"
-          width="890"
-          height="800"
+          width="800"
+          height="1067"
           loading="lazy"
           class="about__image"
         />
@@ -25,7 +27,7 @@
             <img src="/assets/images/icon-linkedin-color.svg" alt="" width="32" height="32" class="about__social-icon" />
           </a>
           <a href="https://www.behance.net/nikolamiljkovic5" target="_blank" rel="me noopener noreferrer" class="about__social-link" aria-label="Behance">
-            <img src="/assets/images/icon-behance-color.webp" alt="" width="32" height="35" class="about__social-icon about__social-icon--behance" />
+            <img src="/assets/images/icon-behance-color.webp" alt="" width="32" height="32" class="about__social-icon" />
           </a>
         </div>
       </div>
@@ -118,10 +120,6 @@
   .about__social-icon {
     width: 2em;
     height: 2em;
-  }
-
-  .about__social-icon--behance {
-    height: 2.2em;
   }
 
   @media (max-width: 991px) {

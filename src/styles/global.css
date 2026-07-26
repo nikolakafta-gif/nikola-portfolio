@@ -51,7 +51,8 @@
 :root {
   /* Colors */
   --color-primary: #1b1d1e;
-  --color-primary-60: #1b1d1e99;
+  /* a6 alpha, not 99: body text on white needs 4.5:1 for WCAG AA — 99 lands at 4.47:1 */
+  --color-primary-60: #1b1d1ea6;
   --color-primary-40: #1b1d1e66;
   --color-primary-10: #1b1d1e1a;
   --color-primary-05: #1b1d1e0d;
