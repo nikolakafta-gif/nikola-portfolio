@@ -1,0 +1,93 @@
+---
+title: How I Built a Restaurant Website That Fills Tables
+summary: >-
+  A kafana in Niš had great food and glowing Google reviews but nothing to send
+  people to. I built a fast bilingual site with the full menu, real prices, and
+  structured data so search engines show the hours, dishes, and reviews before
+  anyone even clicks.
+publishedDate: '2026-07-30'
+coverImage: /assets/images/work-porta-brzi-brod.webp
+client: Kafana Porta Brzi Brod
+industry: Restaurant & Hospitality
+services: Website Design, Web Development, Technical SEO
+liveUrl: https://porta-kafana-brzi-brod.vercel.app
+duration: 4 days
+draft: false
+faqs:
+  - question: How much does a restaurant website cost?
+    answer: >-
+      A custom restaurant website typically costs between $500 and $2,000 depending on the number of pages, whether the menu is managed as structured data, and if you need more than one language. A single-page site with a downloadable menu sits at the low end, while a multi-page bilingual site with a full menu and schema markup sits at the top.
+  - question: How long does it take to build a restaurant website?
+    answer: >-
+      A focused restaurant site takes 3 to 7 days once photos and the menu are ready. The build itself is rarely the bottleneck. Waiting on food photography and a final, priced menu is what stretches most restaurant projects past two weeks.
+  - question: Does a restaurant need a website if it already has Google reviews?
+    answer: >-
+      Yes. A Google listing shows hours and reviews but not your full menu, prices, celebration packages, or the atmosphere of the room. A website is where someone deciding between you and two other places gets enough detail to choose you, and it feeds Google the structured data that makes your listing richer.
+  - question: Should a restaurant menu be a PDF or a web page?
+    answer: >-
+      Always a web page. PDFs are slow on phones, awkward to zoom, and invisible to search engines. A menu built as real HTML with structured data can surface individual dishes and prices in search results, which a PDF can never do.
+  - question: Is it worth making a restaurant website bilingual?
+    answer: >-
+      It is worth it if you get travellers, business visitors, or diaspora guests. A second language costs a fraction of the original build since the design and layout already exist, and it means a visitor searching in English finds you instead of the place next door.
+  - question: What pages should a restaurant website have?
+    answer: >-
+      At minimum a homepage that conveys the atmosphere, a full menu with prices, a page for private events or celebrations, and a contact page with the address, phone number, and a working map. Anything beyond that is optional for most restaurants.
+---
+
+## How do you turn a well-reviewed restaurant into one people can actually find?
+
+Kafana Porta sits in Brzi Brod, a district of Niš, and it had the hard part solved already: charcoal grill going every day, food people write five-star reviews about, and a room regulars keep coming back to. What it did not have was anywhere to send someone who heard the name and pulled out their phone. I built a fast bilingual website with the full priced menu, the celebration hall, and structured data that tells search engines the hours, the dishes, and the location before a visitor even clicks through.
+
+## Why does a kafana need a website when it already has Google reviews?
+
+A Google listing answers two questions: are you open, and are you any good. It does not answer the ones that actually decide where a group eats tonight. What is on the menu. What does it cost. Can twenty of us fit. Is there a garden. Does it look like somewhere worth the drive across town.
+
+Reviews get you considered. Detail gets you chosen. Someone comparing three kafanas is going to pick the one that let them read the menu and see the room, not the one that made them guess.
+
+There is a second, quieter reason. A restaurant with no website has no way to describe itself to search engines beyond what a directory decided to write. A real site with proper markup lets the restaurant define its own hours, address, dishes, and prices, in a format Google reads directly.
+
+## How did I structure the site around how people choose a restaurant?
+
+The whole site follows the order a real decision gets made.
+
+The homepage opens on the terrace at night with a single line that says what the place is: the charcoal burns every day, the food comes out like it does at home. Two actions sit under it, call for a table or see the menu, because those are the only two things a visitor wants at that moment.
+
+Below that come the sections in decision order: what the kitchen does best with a preview of the menu and real prices, the garden and the indoor room so people know where they will sit, the celebration hall with its capacity, then Google reviews from actual guests. The FAQ at the bottom catches everything else, whether reservations are needed, whether cards are accepted, exactly where to find the place.
+
+The menu itself is split into food and drinks rather than crammed into one endless scroll, and every dish carries its portion size and price. No PDF anywhere, which matters more than it sounds.
+
+## Why does the menu being real HTML matter so much?
+
+Most restaurant sites hide the menu behind a PDF link. It is the single most common mistake in the category, and it costs them in three ways at once. PDFs load slowly on a phone, force pinch-zooming to read, and are effectively invisible to search engines.
+
+Here the menu is real markup with `Menu`, `MenuSection`, and `MenuItem` structured data, with prices attached as offers. That means a search engine can understand that this restaurant serves ćevapi at a specific price, in a way it never could from a PDF. The same approach applies to the rest of the site: `Restaurant` schema with the address and coordinates, `OpeningHoursSpecification` for each day group, and `FAQPage` markup on the questions.
+
+This is the same technical SEO foundation I apply to every build, and it is a big part of what separates a site that gets found from one that just exists. I go deeper on how to evaluate that kind of work in my [guide to what to look for in a web developer](/blog/what-to-look-for-in-a-web-developer).
+
+## Why build it in two languages?
+
+Niš gets travellers, people passing through on the corridor, and diaspora visiting family in summer. A kafana that only speaks Serbian online is invisible to all of them at the exact moment they are searching for dinner.
+
+The site runs Serbian at the root and English under `/en/`, with every page paired to its translation. The tricky part was that the two languages do not share slugs: `/proslave` maps to `/en/celebrations`, `/meni/hrana` to `/en/menu/food`. Astro's built-in sitemap pairing works off URL prefixes, so it only ever managed to link the two homepages and left every inner page without alternates.
+
+I built the pairing from the same route table the navigation uses, so every page in the sitemap carries correct hreflang links in both directions and the two language trees cannot drift apart as pages get added. All the copy lives in one file keyed by language, which means a change gets made once rather than twice.
+
+## What was the design approach?
+
+The visual language is deliberately restrained: near-black backgrounds, a muted gold, and warm cream text. Playfair Display for the display headings with wide letter-spacing, EB Garamond for the italic lines that carry the voice, Poppins for navigation and labels.
+
+The design is squared off throughout. No rounded corners except the circular monogram, no drop shadows, no decorative motion. For a kafana the photography is the atmosphere, so the interface stays out of its way. Scroll reveals are handled with GSAP and kept subtle, with Lenis smoothing the scroll itself.
+
+The copy is written in a southern Serbian register rather than neutral marketing language. A kafana that sounds like a corporate landing page is not a kafana anymore, and that voice was worth protecting through the whole build.
+
+## What was the tech stack?
+
+The site is built with [Astro](/blog/web-developer-cost), which ships almost no JavaScript, so pages load close to instantly even on a phone on mobile data outside the restaurant. Photography is served as WebP at multiple sizes. GSAP handles the scroll reveals and Lenis the smooth scrolling, the same restrained approach I took on [Zvonačka Banja](/blog/zvonacka-banja) and [Casera](/blog/casera).
+
+Everything the restaurant might need to change, the address, phone number, hours, menu items and prices, lives in a small set of data files rather than being scattered through templates. Updating a price is one edit in one place, and it propagates to the page, the schema markup, and both languages at once.
+
+## What was the result?
+
+Ten pages across two languages, built in four days. The kafana now has a home that shows the room, lists every dish with its price, explains the celebration hall, and hands search engines a complete, structured description of the business rather than leaving it to a directory listing.
+
+The bigger shift is that the restaurant now owns how it appears online. The menu is not a photo someone posted in 2019. The hours are not whatever a review site scraped. It is all first-party, current, and in a format built to be found.
