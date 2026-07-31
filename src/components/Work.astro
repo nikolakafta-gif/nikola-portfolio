@@ -163,7 +163,7 @@ const projects = [
 
 <style>
   .work {
-    padding-top: 10em;
+    padding-top: var(--section-gap);
     padding-bottom: 0;
   }
 
@@ -351,10 +351,6 @@ const projects = [
   }
 
   @media (max-width: 991px) {
-    .work {
-      padding-top: 2.5em;
-    }
-
     .work__content {
       gap: 2em;
     }
@@ -433,10 +429,6 @@ const projects = [
   }
 
   @media (max-width: 767px) {
-    .work {
-      padding-top: 3.75em;
-    }
-
     .work__fade {
       width: 2em;
     }

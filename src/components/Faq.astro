@@ -76,7 +76,7 @@ const faqs = [
 
 <style>
   .faq {
-    padding-top: 10em;
+    padding-top: var(--section-gap);
     padding-bottom: 0;
   }
 
@@ -181,10 +181,6 @@ const faqs = [
   }
 
   @media (max-width: 991px) {
-    .faq {
-      padding-top: 2.5em;
-    }
-
     .faq__header {
       margin-bottom: 2.5em;
     }
@@ -199,10 +195,6 @@ const faqs = [
   }
 
   @media (max-width: 767px) {
-    .faq {
-      padding-top: 3.75em;
-    }
-
     .faq__question {
       font-size: 1.25em;
     }

@@ -28,7 +28,7 @@ const marqueeItems = [...certificates, ...certificates, ...certificates, ...cert
 
 <style>
   .certificates {
-    padding-top: 10em;
+    padding-top: var(--section-gap);
     padding-bottom: 0;
   }
 
@@ -122,10 +122,6 @@ const marqueeItems = [...certificates, ...certificates, ...certificates, ...cert
   }
 
   @media (max-width: 991px) {
-    .certificates {
-      padding-top: 2.5em;
-    }
-
     .certificates__heading {
       font-size: 2.25em;
     }
@@ -137,10 +133,6 @@ const marqueeItems = [...certificates, ...certificates, ...certificates, ...cert
   }
 
   @media (max-width: 767px) {
-    .certificates {
-      padding-top: 3.75em;
-    }
-
     .certificates__track {
       --card-w: 13em;
       animation-duration: 14s;

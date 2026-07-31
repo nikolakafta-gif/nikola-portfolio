@@ -42,7 +42,7 @@
 
 <style>
   .location {
-    padding-top: 10em;
+    padding-top: var(--section-gap);
     padding-bottom: 0;
   }
 
@@ -149,11 +149,6 @@
 
 
   @media (max-width: 991px) {
-    .location {
-      padding-top: 5em;
-      padding-bottom: 5em;
-    }
-
     .location__content {
       align-items: center;
       text-align: center;
@@ -180,11 +175,6 @@
   }
 
   @media (max-width: 767px) {
-    .location {
-      padding-top: 4em;
-      padding-bottom: 4em;
-    }
-
     .location__heading {
       font-size: 2.5em;
     }

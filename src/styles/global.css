@@ -12,6 +12,15 @@
   --size-container: clamp(var(--size-container-min), 100vw, var(--size-container-max));
   --size-font: calc(var(--size-container) / (var(--size-container-ideal) / var(--size-unit)));
   --container-padding: 3.25em;
+  /*
+   * Vertical rhythm between top-level sections. Every section sets
+   * `padding-top: var(--section-gap)` and leaves padding-bottom at 0, so the
+   * gap between any two sections is exactly this value and cannot drift.
+   * It must shrink monotonically with the viewport: it previously dropped to
+   * 2.5em on tablet and then grew back to 3.75em on mobile, which made tablet
+   * the most cramped layout of the three.
+   */
+  --section-gap: 10em;
 }
 
 /* Tablet */
@@ -21,6 +30,7 @@
     --size-container-min: 768px;
     --size-container-max: 991px;
     --container-padding: 1.5em;
+    --section-gap: 6em;
   }
 }
 
@@ -31,6 +41,7 @@
     --size-container-min: 480px;
     --size-container-max: 767px;
     --container-padding: 1em;
+    --section-gap: 4.5em;
   }
 }
 
