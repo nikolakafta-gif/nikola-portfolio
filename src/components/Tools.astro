@@ -1,0 +1,205 @@
+---
+const tools = [
+  { name: "Webflow", src: "/assets/images/tool-webflow.webp" },
+  { name: "Figma", src: "/assets/images/tool-figma.webp" },
+  { name: "Astro", src: "/assets/images/tool-astro.webp" },
+  { name: "GitHub", src: "/assets/images/tool-github.webp" },
+  { name: "Vercel", src: "/assets/images/tool-vercel.svg" },
+  { name: "Claude", src: "/assets/images/tool-claude.webp" },
+  { name: "Swiper", src: "/assets/images/tool-swiper.webp" },
+];
+
+/*
+ * The track holds SETS identical rows. Each set carries its own trailing gap
+ * (padding-right), so shifting the track by exactly one set width — that is
+ * -100% / SETS — lands the second set precisely where the first one started.
+ * Keep this in sync with the -100% / 3 in the keyframe below.
+ */
+const SETS = 3;
+---
+
+<section class="tools" id="tools">
+  <div class="tools__inner container">
+    <div class="tools__content">
+      <h2 class="tools__heading" data-fade-up>Tools that I <span class="tools__italic">use</span></h2>
+    </div>
+    <div class="tools__marquee" data-fade-up>
+      <div class="tools__track">
+        {Array.from({ length: SETS }).map((_, setIndex) => (
+          <div class="tools__set" aria-hidden={setIndex > 0 ? "true" : undefined}>
+            {tools.map((tool) => (
+              <div class="tools__item">
+                <img
+                  src={tool.src}
+                  alt={setIndex === 0 ? `${tool.name} logo` : ""}
+                  width="200"
+                  height="200"
+                  loading="lazy"
+                  decoding="async"
+                  class="tools__logo"
+                />
+                <span class="tools__name">{tool.name}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tools {
+    padding-top: var(--section-gap);
+    padding-bottom: 0;
+  }
+
+  .tools__inner {
+    max-width: 1272px;
+  }
+
+  .tools__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tools__heading {
+    max-width: 704px;
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    text-align: center;
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .tools__italic {
+    font-family: var(--font-heading);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -1px;
+  }
+
+  /* Marquee wrapper with fade edges */
+  .tools__marquee {
+    position: relative;
+    overflow: hidden;
+    margin-top: 2.5em;
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+
+  /* Scrolling track */
+  .tools__track {
+    display: flex;
+    width: max-content;
+    animation: tools-scroll 32s linear infinite;
+  }
+
+  .tools__set {
+    display: flex;
+    gap: 1em;
+    /* Trailing gap so the loop seam matches the spacing inside a set */
+    padding-right: 1em;
+  }
+
+  @keyframes tools-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-100% / 3));
+    }
+  }
+
+  .tools__marquee:hover .tools__track {
+    animation-play-state: paused;
+  }
+
+  .tools__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    flex-shrink: 0;
+    padding: 0.75em 1.5em 0.75em 0.875em;
+    border: 1px solid var(--color-primary-10);
+    border-radius: var(--radius-pill);
+    background: var(--color-white);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .tools__logo {
+    width: 2.5em;
+    height: 2.5em;
+    object-fit: contain;
+    border-radius: 0.5em;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .tools__name {
+    font-family: var(--font-body);
+    font-size: 1.125em;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--color-primary);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 991px) {
+    .tools__heading {
+      font-size: 2.25em;
+    }
+
+    .tools__track {
+      animation-duration: 26s;
+    }
+
+    .tools__logo {
+      width: 2.25em;
+      height: 2.25em;
+    }
+
+    .tools__name {
+      font-size: 1em;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .tools__track {
+      animation-duration: 22s;
+    }
+
+    .tools__item {
+      padding: 0.625em 1.25em 0.625em 0.75em;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .tools__track {
+      animation: none;
+    }
+
+    .tools__marquee {
+      -webkit-mask-image: none;
+      mask-image: none;
+      overflow-x: auto;
+    }
+  }
+</style>
