@@ -125,7 +125,12 @@
 - Format note: **no markdown tables in posts.** `[slug].astro` and global.css have zero table styling, and no existing post uses one. The brief's decision table was rendered as grouped bullet lists instead
 - Pricing stays consistent with the rest of the site ($500-$2,000 for my own work); higher market figures are attributed to agencies only, so the cost guide is not contradicted
 - Verified locally: Article + BreadcrumbList + FAQPage schema all present, meta description 153 chars, canonical correct, no console errors, post appears first on `/blog`
-- **PENDING:** not yet committed, deployed, or submitted to the Indexing API
+- Deployed 2026-08-01 (commit `162a0c1`) and submitted to the Indexing API as
+  `https://www.nikolamiljkovic.live/blog/freelance-developer-vs-agency/` — **with the trailing slash**,
+  matching the sitemap and canonical. Submitting the slashless form would point Google at a URL the
+  site does not consider canonical. Check the exact `<loc>` in the sitemap before every submission.
+- Next on the calendar: Month 2 Week 3-4, "How Long Does It Take to Build a Website (Real Timelines)"
+  (Cluster 13, timeline guide, 1500+ words)
 
 ### Lighthouse remediation (2026-07-26)
 Baseline: Performance 75, Accessibility 91, Best Practices 96, SEO 100, Agentic Browsing 1/3.
