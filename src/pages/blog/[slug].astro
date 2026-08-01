@@ -388,8 +388,9 @@ function metaDescription(text: string, maxLength = 155) {
     display: block;
   }
 
+  /* 0: the following section's padding-top is the single source of this gap. */
   .case-study__content {
-    padding-bottom: 3em;
+    padding-bottom: 0;
   }
 
   .case-study__content-inner {
@@ -501,8 +502,11 @@ function metaDescription(text: string, maxLength = 155) {
     margin: 1.5em 0;
   }
 
+  /* Same rule as every top-level section on the site: the section owns the gap
+     above it, and leaves the one below to whatever comes next. */
   .faq {
-    padding-bottom: 3em;
+    padding-top: var(--section-gap);
+    padding-bottom: 0;
   }
 
   .faq__inner {
@@ -553,7 +557,8 @@ function metaDescription(text: string, maxLength = 155) {
   }
 
   .related {
-    padding-bottom: 2em;
+    padding-top: var(--section-gap);
+    padding-bottom: 0;
   }
 
   .related__inner {
@@ -699,10 +704,6 @@ function metaDescription(text: string, maxLength = 155) {
 
     .case-study__cover-image {
       border-radius: 0.75em;
-    }
-
-    .case-study__content {
-      padding-bottom: 1em;
     }
 
     .case-study__content-inner {

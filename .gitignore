@@ -63,3 +63,6 @@ next-env.d.ts
 _starter-backup/
 
 .vercel
+
+# Local screenshot scratch
+.tmp-shots/

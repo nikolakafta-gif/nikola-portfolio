@@ -116,6 +116,17 @@
 - Submitted `/blog/what-to-look-for-in-a-web-developer` via Indexing API (2026-07-25) — use `node .claude/scripts/google-index.cjs <url>` for all future posts going forward
 - Submitted all 11 sitemap URLs via Indexing API (2026-07-25) after GSC showed 8 not indexed / 3 indexed
 
+### Phase 05 — Month 2 Week 1-2 (2026-08-01)
+- Brief written: `CONTENT-BRIEF-02.md` (Cluster 2, commercial investigation, primary keyword "should i hire a freelance developer or an agency", 720/mo, low difficulty)
+- Article written: "Freelance Developer vs Agency: Which Should You Hire?" at `/blog/freelance-developer-vs-agency` — 1948 words, 8-question FAQ, answer-first intro, all 7 content H2s in question format
+- Differentiator vs SERP: a full "When Should You Not Hire a Freelancer?" section. Page one is all marketplaces (Upwork, Arc.dev, lemon.io) and agencies, none of which name where their own model is the wrong choice
+- Citation hygiene: the two sources planned in the brief both failed verification (Clutch's freelance-vs-agency resource is a hard **404**, Upwork's returns **403** to crawlers). Replaced with two verified-live sources: [Clutch web development pricing](https://clutch.co/web-developers/pricing) (US agency rates $100-$149/hr, avg project ~$66k) and [Stack Overflow Developer Survey 2025](https://survey.stackoverflow.co/2025/work/) (13.9% independent/freelance). **Always re-fetch a citation before writing it in** — search snippets surface dead URLs
+- Cannibalisation fixed: `what-to-look-for-in-a-web-developer` had a freelancer-vs-agency section competing for this exact query. Shortened it and pointed it at the new article. `web-developer-cost` got a reciprocal link from its agency-pricing section
+- Format note: **no markdown tables in posts.** `[slug].astro` and global.css have zero table styling, and no existing post uses one. The brief's decision table was rendered as grouped bullet lists instead
+- Pricing stays consistent with the rest of the site ($500-$2,000 for my own work); higher market figures are attributed to agencies only, so the cost guide is not contradicted
+- Verified locally: Article + BreadcrumbList + FAQPage schema all present, meta description 153 chars, canonical correct, no console errors, post appears first on `/blog`
+- **PENDING:** not yet committed, deployed, or submitted to the Indexing API
+
 ### Lighthouse remediation (2026-07-26)
 Baseline: Performance 75, Accessibility 91, Best Practices 96, SEO 100, Agentic Browsing 1/3.
 - A11y: mobile menu used `aria-hidden="true"` while its links stayed keyboard-focusable — switched to `inert` (toggled in Navbar.astro's open/close handlers). Do not revert to aria-hidden.

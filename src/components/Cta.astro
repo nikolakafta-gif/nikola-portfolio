@@ -18,10 +18,17 @@ import ButtonExpand from "./ButtonExpand.astro";
 
 <style>
   .cta {
-    /* Half the section rhythm: the CTA card carries its own generous inner
-       padding, so it needs less breathing room above it than a plain section. */
-    padding-top: calc(var(--section-gap) / 2);
-    padding-bottom: 2.5em;
+    /*
+     * Full section rhythm, top and bottom. The card has a visible border, so the
+     * eye reads that edge as the section boundary — at half the gap it sat
+     * noticeably closer to the section above than any other pair on the page.
+     *
+     * This is the one section that also sets padding-bottom, because it is the
+     * last one before the footer and nothing after it would otherwise close the
+     * rhythm (the footer's own padding sits below its border, not above it).
+     */
+    padding-top: var(--section-gap);
+    padding-bottom: var(--section-gap);
     position: relative;
     z-index: 5;
   }

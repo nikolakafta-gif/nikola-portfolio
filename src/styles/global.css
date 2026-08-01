@@ -98,7 +98,12 @@
   --spacing-3xl: 3em;      /* 48px */
   --spacing-4xl: 4em;      /* 64px */
   --spacing-5xl: 5em;      /* 80px */
-  --spacing-section: 6.25em; /* 100px */
+  /*
+   * No --spacing-section here. It used to exist as a second, fixed 6.25em
+   * section token, which meant /blog and /404 kept the same gap at every
+   * breakpoint while every other page scaled theirs. Use --section-gap (above)
+   * for all section rhythm — it is the responsive one.
+   */
 
   /* Border radius */
   --radius-sm: 0.25em;     /* 4px */

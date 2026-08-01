@@ -133,9 +133,12 @@ const stats = [
       gap: 3.125em;
     }
 
+    /* No margin-top here: the heading is the section's first element, so it sits
+       directly under `padding-top: var(--section-gap)`. A margin in em resolves
+       against the heading's own 2em font-size, which stacked another ~96px on
+       top of that padding and left a dead band under the hero. */
     .pillars__heading {
       font-size: 2em;
-      margin-top: 3.125em;
     }
 
     .pillars__stats {

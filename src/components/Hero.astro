@@ -2,14 +2,15 @@
 import ButtonExpand from "./ButtonExpand.astro";
 ---
 
-<section class="hero">
+<section class="hero" data-hero>
   <div class="hero__inner container">
+    <p class="hero__eyebrow" data-hero-eyebrow>Freelance web developer, Webflow &amp; Astro</p>
     <h1 class="hero__heading">
-      <span class="hero__line" data-hero-line="1">I build pixel</span>
-      <span class="hero__line" data-hero-line="2">perfect websites,</span>
-      <span class="hero__line hero__italic" data-hero-line="3">one project at a time</span>
+      <span class="hero__line"><span class="hero__line-inner" data-hero-line>Websites that grow</span></span>
+      <span class="hero__line"><span class="hero__line-inner" data-hero-line>small businesses,</span></span>
+      <span class="hero__line"><span class="hero__line-inner hero__italic" data-hero-line>one project at a time</span></span>
     </h1>
-    <p class="hero__text" data-hero-text>Whether you're refreshing an outdated website or building something completely new, my approach stays the same. AI-enhanced workflow, clean interactions, and pixel-perfect execution that brings your brand to life.</p>
+    <p class="hero__text" data-hero-text>I'm Nikola, a freelance web developer based in Niš, Serbia, working with small businesses and startups worldwide. I build fast, custom websites in Webflow and Astro, from a single landing page to a full redesign, and I stay hands on from the first wireframe to launch.</p>
     <div class="hero__actions" data-hero-actions>
       <ButtonExpand href="/contact" label="Get Started" variant="accent" />
     </div>
@@ -20,89 +21,55 @@ import ButtonExpand from "./ButtonExpand.astro";
   import gsap from "gsap";
 
   async function animateHero() {
-    const line1 = document.querySelector('[data-hero-line="1"]') as HTMLElement;
-    const line2 = document.querySelector('[data-hero-line="2"]') as HTMLElement;
-    const line3 = document.querySelector('[data-hero-line="3"]') as HTMLElement;
-    const text = document.querySelector('[data-hero-text]') as HTMLElement;
-    const actions = document.querySelector('[data-hero-actions]') as HTMLElement;
-    if (!line1 || !line2 || !line3 || !text || !actions) return;
-    if (line1.dataset.animated) return;
-    line1.dataset.animated = "true";
+    const hero = document.querySelector<HTMLElement>("[data-hero]");
+    if (!hero || hero.dataset.animated) return;
 
-    /* Wait for fonts — prevents layout shift from font-swap */
+    const eyebrow = hero.querySelector<HTMLElement>("[data-hero-eyebrow]");
+    const lines = hero.querySelectorAll<HTMLElement>("[data-hero-line]");
+    const text = hero.querySelector<HTMLElement>("[data-hero-text]");
+    const actions = hero.querySelector<HTMLElement>("[data-hero-actions]");
+    if (!eyebrow || !lines.length || !text || !actions) return;
+
+    hero.dataset.animated = "true";
+
+    /* Wait for fonts — prevents the reveal from running against swapped metrics */
     await document.fonts.ready;
 
-    /* Split lines 1 & 2 into words */
-    function splitIntoWords(el: HTMLElement) {
-      const words = (el.textContent || "").split(" ");
-      el.textContent = "";
-      return words.map((word, i) => {
-        const span = document.createElement("span");
-        span.textContent = i < words.length - 1 ? word + " " : word;
-        span.style.display = "inline-block";
-        span.style.opacity = "0";
-        el.appendChild(span);
-        return span;
-      });
-    }
-
-    const words1 = splitIntoWords(line1);
-    line1.style.opacity = "1";
-    const words2 = splitIntoWords(line2);
-    line2.style.opacity = "1";
-
-    /* Split line 3 into characters for typewriter */
-    const line3Text = line3.textContent || "";
-    line3.textContent = "";
-    const chars = [...line3Text].map((char) => {
-      const span = document.createElement("span");
-      span.textContent = char;
-      span.style.display = "inline-block";
-      span.style.opacity = "0";
-      if (char === " ") span.style.whiteSpace = "pre";
-      line3.appendChild(span);
-      return span;
-    });
-    line3.style.opacity = "1";
-
     const mm = gsap.matchMedia();
+
+    /*
+     * Whole lines slide up out of their own overflow mask. Keeping each line as
+     * one element (instead of per-word or per-character spans) preserves
+     * kerning and gives one continuous motion rather than a series of pops.
+     */
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const tl = gsap.timeline({ delay: 0.3 });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.15 });
 
-      /* Line 1: word by word from below */
-      tl.fromTo(words1,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: "back.out(1.4)" }
+      tl.fromTo(eyebrow,
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.7 }
       )
-
-      /* Line 2: word by word from below */
-      .fromTo(words2,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: "back.out(1.4)" },
-        "-=0.2"
-      )
-
-      /* Line 3: typewriter — letter by letter */
-      .to(chars, {
-        opacity: 1,
-        duration: 0.05,
-        stagger: 0.06,
-        ease: "none",
-      }, "-=0.2")
-
-      /* Paragraph fade in */
-      .to(text, {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out",
-      }, "-=0.5")
-
-      /* Button fade in */
-      .to(actions, {
-        opacity: 1,
-        duration: 0.8,
-        ease: "power2.out",
-      }, "-=0.5");
+        /*
+         * `y: 0` in the from-state is required: the CSS hidden state uses a
+         * percentage translate, which GSAP parses into a px offset it would
+         * otherwise keep as a base on top of yPercent, leaving every line
+         * parked below its mask once the tween finishes.
+         */
+        .fromTo(lines,
+          { yPercent: 115, y: 0 },
+          { yPercent: 0, duration: 1.1, stagger: 0.11 },
+          "-=0.45"
+        )
+        .fromTo(text,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.9 },
+          "-=0.7"
+        )
+        .fromTo(actions,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.9 },
+          "-=0.75"
+        );
     });
   }
 
@@ -116,34 +83,93 @@ import ButtonExpand from "./ButtonExpand.astro";
 
 <style>
   .hero {
-    padding-top: 15em;
-    padding-bottom: 3.75em;
+    /*
+     * Fill the first screen so the heading, paragraph and button read as one
+     * block instead of the copy being pushed below the fold — but stop at 54em.
+     *
+     * The heading is capped by the container width, so past a certain viewport
+     * height the content stops growing while a plain 100svh keeps stretching,
+     * leaving a tall empty band and hiding the next section entirely. The
+     * content measures ~50.4em at its largest; 54em reproduces the spacing the
+     * hero has at 1440x900 (~55px between navbar and eyebrow) and trims only the
+     * surplus above that. This is a floor, not a ceiling: if the content ever
+     * needs more room, the section still grows past it.
+     */
+    min-height: min(100vh, 54em);
+    min-height: min(100svh, 54em);
+    display: flex;
+    align-items: center;
+    /* Clears the fixed 6em navbar */
+    padding-top: 7em;
+    padding-bottom: 2.5em;
   }
 
   .hero__inner {
+    width: 100%;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     max-width: 1272px;
-    overflow: hidden;
+  }
+
+  .hero__eyebrow {
+    margin: 0 0 1em;
+    font-family: var(--font-body);
+    font-size: 0.875em;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-primary-60);
+    opacity: 0;
   }
 
   .hero__heading {
-    max-width: 1100px;
+    /* Fills the container rather than a fixed 1100px, so the type keeps scaling
+       with the layout on wide screens instead of leaving dead space around it. */
+    max-width: 100%;
     font-family: var(--font-body);
     color: var(--color-primary);
-    font-size: 8.125em;
+    /*
+     * Three caps, all of which must hold:
+     *   8.125em  design size
+     *   12vh     keeps heading + copy + button on screen on short laptops
+     *   width    keeps the nowrap lines inside their masks
+     *
+     * The width cap is the important one. The lines are `white-space: nowrap`
+     * inside `overflow: hidden` masks, so anything wider than the container is
+     * silently sliced off rather than wrapping. 8.7 is the width-to-font-size
+     * ratio of the longest line ("Websites that grow", measured at 8.5 with the
+     * loaded font) plus margin for fallback-font metrics during swap. A
+     * viewport-width proxy like 10.5vw does not work here: it ignores both the
+     * container's max-width and its padding, which is what actually bounds the
+     * text, so on tall windows the font outgrew the mask and clipped.
+     */
+    font-size: min(
+      8.125em,
+      12vh,
+      calc((min(100vw, 1272px) - 2 * var(--container-padding)) / 8.7)
+    );
     font-weight: 500;
     line-height: 1.2;
     margin: 0;
   }
 
-  /* CSS hides content before JS loads — prevents font-swap flash */
+  /* Mask each line — the inner span slides up out of it */
   .hero__line {
     display: block;
-    opacity: 0;
+    overflow: hidden;
+    /* Room for italic descenders so the mask never clips them */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+
+  /* CSS hides content before JS loads — prevents font-swap flash */
+  .hero__line-inner {
+    display: block;
     white-space: nowrap;
+    transform: translateY(115%);
   }
 
   .hero__italic {
@@ -174,39 +200,84 @@ import ButtonExpand from "./ButtonExpand.astro";
     opacity: 0;
   }
 
+  /* Short desktop windows (1366x768 laptops, browsers at 125% zoom) get a
+     tighter rhythm so the button still lands above the fold. */
+  @media (min-width: 992px) and (max-height: 800px) {
+    .hero {
+      padding-top: 6.5em;
+      padding-bottom: 2em;
+    }
+
+    .hero__eyebrow {
+      margin-bottom: 0.75em;
+    }
+
+    .hero__heading {
+      font-size: min(
+        8.125em,
+        11.5vh,
+        calc((min(100vw, 1272px) - 2 * var(--container-padding)) / 8.7)
+      );
+    }
+
+    .hero__text {
+      padding-top: 0.5em;
+    }
+
+    .hero__actions {
+      margin-top: 1.5em;
+    }
+  }
+
   @media (max-width: 991px) {
     .hero {
-      padding-top: 10em;
+      padding-top: 9em;
       padding-bottom: 2em;
     }
 
     .hero__heading {
-      font-size: 5em;
+      font-size: min(5em, 11vh, 10.5vw);
     }
   }
 
   @media (max-width: 767px) {
     .hero {
-      padding-top: 8.75em;
+      /*
+       * Phones need their own cap. The content is proportionally much shorter
+       * here (~37.4em against ~50.4em on desktop), so the 54em desktop cap never
+       * engages and the section keeps stretching to the full screen, leaving a
+       * ~118px empty band above and below the copy. 42em keeps roughly the same
+       * air around the heading as the desktop layout has, measured in em.
+       *
+       * `padding-top` cannot absorb this: 8em is mostly clearance for the 6em
+       * fixed navbar, so only ~31px of it is actual breathing room.
+       */
+      min-height: min(100vh, 42em);
+      min-height: min(100svh, 42em);
+      padding-top: 8em;
       padding-bottom: 1.5em;
     }
 
     .hero__heading {
-      font-size: 3.4375em;
+      font-size: min(3.4375em, 9vh, 10.5vw);
       line-height: 1.1;
     }
   }
 
   @media (max-width: 479px) {
     .hero__heading {
-      font-size: 3em;
+      font-size: min(3em, 8.5vh, 10.5vw);
       line-height: 1;
     }
   }
 
   /* Reduced motion — show content immediately */
   @media (prefers-reduced-motion: reduce) {
-    .hero__line,
+    .hero__line-inner {
+      transform: none;
+    }
+
+    .hero__eyebrow,
     .hero__text,
     .hero__actions {
       opacity: 1;
