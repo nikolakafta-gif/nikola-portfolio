@@ -125,6 +125,35 @@
 - Format note: **no markdown tables in posts.** `[slug].astro` and global.css have zero table styling, and no existing post uses one. The brief's decision table was rendered as grouped bullet lists instead
 - Pricing stays consistent with the rest of the site ($500-$2,000 for my own work); higher market figures are attributed to agencies only, so the cost guide is not contradicted
 - Verified locally: Article + BreadcrumbList + FAQPage schema all present, meta description 153 chars, canonical correct, no console errors, post appears first on `/blog`
+### CORRECTION — the Indexing API does nothing for this site (2026-08-01)
+
+Google's own docs: *"The Indexing API can only be used to crawl pages with either `JobPosting` or
+`BroadcastEvent` embedded in a `VideoObject`."* Blog posts and case studies are **not** supported.
+A `200` from `urlNotifications:publish` only means the request was accepted, never that Google will
+crawl. Every submission logged below (2026-07-25, 2026-08-01) was a no-op.
+
+Confirmed by URL Inspection on 2026-08-01: 5 of 14 sitemap URLs indexed, 9 not, and seven of the
+nine submitted on 2026-07-25 still read `URL is unknown to Google` with `last crawl: never`.
+
+Not a technical fault. robots.txt allows all, the pages return 200 to Googlebot, no `noindex`, and
+canonicals are self-referencing. It is crawl budget on a low-authority domain.
+
+**Do instead:** request indexing manually in the Search Console UI for priority URLs (small daily
+quota, but it genuinely works), and treat Phase 04/08 link building as the actual fix. Keep
+`google-index.cjs` only if JobPosting content is ever added.
+
+Check status any time with `node .claude/scripts/google-index-status.cjs` (reads the sitemap, reports
+verdict, coverage state, last crawl and canonical mismatches). Needs the Search Console API enabled
+in Cloud project `level-hallway-450015-f6` — enabled 2026-08-01.
+
+### Index status snapshot (2026-08-01)
+- Indexed (5): `/`, `/blog/`, `/blog/casera/`, `/blog/web-developer-cost/`, `/blog/zvonacka-banja/`
+- Discovered but not indexed (2): `/blog/doorly/`, `/contact/`
+- Unknown to Google (7): `advisia`, `comira`, `victoria`, `vistal`, `porta-brzi-brod`,
+  `what-to-look-for-in-a-web-developer`, `freelance-developer-vs-agency`
+
+---
+
 - Deployed 2026-08-01 (commit `162a0c1`) and submitted to the Indexing API as
   `https://www.nikolamiljkovic.live/blog/freelance-developer-vs-agency/` — **with the trailing slash**,
   matching the sitemap and canonical. Submitting the slashless form would point Google at a URL the
