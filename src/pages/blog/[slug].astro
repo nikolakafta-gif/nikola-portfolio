@@ -140,8 +140,17 @@ function metaDescription(text: string, maxLength = 155) {
           <div class="case-study__meta" data-fade-up>
             {entry.client && (
               <div class="case-study__meta-item">
-                <span class="case-study__meta-label">Client</span>
+                {/* `client` drives isCaseStudy, so concept work keeps the field
+                    and only the label changes — calling a self-initiated build
+                    a client is the one thing a reviewer will check. */}
+                <span class="case-study__meta-label">{entry.concept ? "Project" : "Client"}</span>
                 <span class="case-study__meta-value">{entry.client}</span>
+              </div>
+            )}
+            {entry.concept && (
+              <div class="case-study__meta-item">
+                <span class="case-study__meta-label">Type</span>
+                <span class="case-study__meta-value">Concept / self-initiated</span>
               </div>
             )}
             {entry.industry && (

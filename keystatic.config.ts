@@ -21,7 +21,11 @@ export default config({
           directory: 'public/assets/images/posts',
           publicPath: '/assets/images/posts/',
         }),
-        client: fields.text({ label: 'Client name' }),
+        client: fields.text({ label: 'Client name (or project name for concept work)' }),
+        concept: fields.checkbox({
+          label: 'Concept / self-initiated project (not client work)',
+          defaultValue: false,
+        }),
         industry: fields.text({ label: 'Industry' }),
         services: fields.text({ label: 'Services provided' }),
         liveUrl: fields.url({ label: 'Live site URL' }),
