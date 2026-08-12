@@ -158,8 +158,37 @@ in Cloud project `level-hallway-450015-f6` — enabled 2026-08-01.
   `https://www.nikolamiljkovic.live/blog/freelance-developer-vs-agency/` — **with the trailing slash**,
   matching the sitemap and canonical. Submitting the slashless form would point Google at a URL the
   site does not consider canonical. Check the exact `<loc>` in the sitemap before every submission.
-- Next on the calendar: Month 2 Week 3-4, "How Long Does It Take to Build a Website (Real Timelines)"
-  (Cluster 13, timeline guide, 1500+ words)
+### Phase 05 — Month 2 Week 3-4 (2026-08-12)
+- Brief written: `CONTENT-BRIEF-03.md` (Cluster 13, informational, primary keyword "how long does it take
+  to build a website", 3,600/mo, medium difficulty)
+- Article written: "How Long Does It Take to Build a Website?" at `/blog/how-long-to-build-a-website` —
+  1,799 words, 8-question FAQ, answer-first intro with numbers in the first sentence, all 7 content H2s
+  in question format
+- URL choice: Cluster 13's recommended `/blog/web-development-process` stays reserved for the Month 8
+  pillar hub page, so this took the timeline-specific slug. The hub links down to it later
+- Differentiator vs SERP: **eight named live projects with their actual durations** (Comira 3 days,
+  Porta Brzi Brod 4 days, Doorly 1 week, Victoria 1 week, Casera/Advisia/Vistal/Zvonačka Banja 2 weeks
+  each), pulled from the `duration` field of the case studies. Page one is hosting companies and site
+  builders answering "a weekend" and agencies answering 8-16 weeks, all with hypothetical ranges only
+- Also reconciles that contradiction in its own section ("Why Do Agencies Quote 2 to 3 Months...")
+  instead of ignoring it, and closes with the post-launch indexing wait, which no page-one result covers
+- Citations verified live on the day of writing: [Google Search Central, ask Google to recrawl](https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl)
+  ("Crawling can take anywhere from a few days to a few weeks") and [web.dev LCP](https://web.dev/articles/lcp)
+  (good LCP is 2.5s at the 75th percentile)
+- Cannibalisation fixed in all three older posts: `web-developer-cost` (build-time section),
+  `what-to-look-for-in-a-web-developer` (the "realistic timeline" bullet, shortened), and
+  `freelance-developer-vs-agency` ("Which One Is Faster?") each now link out to this article
+- Timeline numbers kept identical to what was already published (3-7 days, 1-3 weeks, 2-4 weeks,
+  4-8+ weeks). Do not introduce a second scale in future posts
+- Format rules held: no markdown tables, no em dashes anywhere in the file
+- Verified locally: Article + BreadcrumbList + FAQPage schema present, meta description 150 chars,
+  title 60 chars with the suffix, 8 FAQ items rendered, 13 internal links, 2 external, no console
+  errors, post appears first on `/blog`, `npm run build` passes
+- **Not yet deployed.** Pending: commit, push, then request indexing manually in the Search Console UI
+  for `https://www.nikolamiljkovic.live/blog/how-long-to-build-a-website/` (trailing slash, from the
+  sitemap `<loc>`)
+- Next on the calendar: Month 3 Week 1-2, "Do You Need a Custom Website or a Template"
+  (Cluster 14, comparison, 1800+ words)
 
 ### Lighthouse remediation (2026-07-26)
 Baseline: Performance 75, Accessibility 91, Best Practices 96, SEO 100, Agentic Browsing 1/3.
