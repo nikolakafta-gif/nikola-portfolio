@@ -184,9 +184,23 @@ in Cloud project `level-hallway-450015-f6` — enabled 2026-08-01.
 - Verified locally: Article + BreadcrumbList + FAQPage schema present, meta description 150 chars,
   title 60 chars with the suffix, 8 FAQ items rendered, 13 internal links, 2 external, no console
   errors, post appears first on `/blog`, `npm run build` passes
-- **Not yet deployed.** Pending: commit, push, then request indexing manually in the Search Console UI
-  for `https://www.nikolamiljkovic.live/blog/how-long-to-build-a-website/` (trailing slash, from the
-  sitemap `<loc>`)
+- Deployed 2026-08-12 (commit `bc4f841`). Live page verified in production: canonical
+  `https://www.nikolamiljkovic.live/blog/how-long-to-build-a-website/` (trailing slash, matches the
+  sitemap `<loc>`), title 60 chars, meta description 150 chars, Article + BreadcrumbList + FAQPage
+  with 8 Question blocks all present
+- **Manual action left for Nikola:** Search Console UI, Request Indexing for
+  `https://www.nikolamiljkovic.live/blog/how-long-to-build-a-website/` and, more urgently,
+  `https://www.nikolamiljkovic.live/blog/freelance-developer-vs-agency/`
+
+### Index status snapshot (2026-08-12) — big improvement
+`node .claude/scripts/google-index-status.cjs`: **13 indexed of 15**, up from 5 of 14 on 2026-08-01.
+Everything submitted manually through the Search Console UI got crawled within days, which confirms
+the correction above: the UI request works, the Indexing API does not.
+
+Still unknown to Google (2):
+- `/blog/freelance-developer-vs-agency/` — live since 2026-08-01, still `last crawl: never`. It is the
+  only commercial article not indexed, so it goes first in the next Request Indexing round.
+- `/blog/how-long-to-build-a-website/` — expected, published today.
 - Next on the calendar: Month 3 Week 1-2, "Do You Need a Custom Website or a Template"
   (Cluster 14, comparison, 1800+ words)
 
