@@ -28,10 +28,22 @@ const transformed = Markdoc.transform(content.node);
 const renderedContent = Markdoc.renderers.html(transformed);
 
 const allPosts = await reader.collections.posts.all();
-const relatedPosts = allPosts
-  .filter((p) => p.slug !== slug && !p.entry.draft)
-  .sort(() => 0.5 - Math.random())
-  .slice(0, 2);
+
+/* Related posts stay inside their own kind first: a guide should not send the
+   reader off to a hotel case study. Anything left over fills the second slot. */
+const isThisCaseStudy = !!entry.client;
+const candidates = allPosts.filter((p) => p.slug !== slug && !p.entry.draft);
+const sameKind = candidates.filter((p) => !!p.entry.client === isThisCaseStudy);
+const otherKind = candidates.filter((p) => !!p.entry.client !== isThisCaseStudy);
+const relatedPosts = [
+  ...sameKind.sort(() => 0.5 - Math.random()),
+  ...otherKind.sort(() => 0.5 - Math.random()),
+].slice(0, 2);
+
+/* Every cover ships with -400 and -700 variants beside it. Regenerate both if a
+   cover is ever replaced, or this srcset will 404 on small screens. */
+const coverSrcset = (src: string) =>
+  `${src.replace(".webp", "-400.webp")} 400w, ${src.replace(".webp", "-700.webp")} 700w, ${src} 1120w`;
 
 const faqs = entry.faqs || [];
 const faqSchema = faqs.length > 0 ? {
@@ -86,7 +98,7 @@ const breadcrumbSchema = {
     {
       "@type": "ListItem",
       position: 2,
-      name: "Case Studies",
+      name: "Case Studies and Guides",
       item: "https://www.nikolamiljkovic.live/blog/",
     },
     {
@@ -202,11 +214,13 @@ function metaDescription(text: string, maxLength = 155) {
           <div class="case-study__cover-inner container">
             <img
               src={entry.coverImage}
-              alt={`${entry.title} project screenshot`}
+              srcset={coverSrcset(entry.coverImage)}
+              sizes="(max-width: 767px) 92vw, 1120px"
+              alt={isCaseStudy ? `${entry.title} project screenshot` : entry.title}
               class="case-study__cover-image"
               loading="lazy"
-              width="1200"
-              height="680"
+              width="1120"
+              height="582"
             />
           </div>
         </div>
@@ -246,6 +260,8 @@ function metaDescription(text: string, maxLength = 155) {
                   {rp.entry.coverImage ? (
                     <img
                       src={rp.entry.coverImage}
+                      srcset={coverSrcset(rp.entry.coverImage)}
+                      sizes="(max-width: 767px) 92vw, 400px"
                       alt={rp.entry.title}
                       class="related__image"
                       loading="lazy"

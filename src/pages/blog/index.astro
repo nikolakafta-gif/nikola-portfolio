@@ -18,6 +18,17 @@ const posts = allPosts
     return dateB - dateA;
   });
 
+/* Same rule the article template uses: a `client` means it is real client work.
+   Everything else is a written guide, and the two do not belong in one grid. */
+const caseStudies = posts.filter((post) => !!post.entry.client);
+const guides = posts.filter((post) => !post.entry.client);
+
+/* Every cover ships with -400 and -700 variants beside it. Regenerate both if a
+   cover is ever replaced, or this srcset will 404 on small screens. */
+const coverSrcset = (src: string) =>
+  `${src.replace(".webp", "-400.webp")} 400w, ${src.replace(".webp", "-700.webp")} 700w, ${src} 1120w`;
+const coverSizes = "(max-width: 767px) 92vw, (max-width: 1200px) 45vw, 560px";
+
 const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -31,7 +42,7 @@ const breadcrumbSchema = {
     {
       "@type": "ListItem",
       position: 2,
-      name: "Case Studies",
+      name: "Case Studies and Guides",
       item: "https://www.nikolamiljkovic.live/blog/",
     },
   ],
@@ -40,8 +51,8 @@ const breadcrumbSchema = {
 const collectionSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "Case Studies",
-  description: "See how I build pixel-perfect websites for real clients. Detailed case studies with challenges, solutions, and live results from Astro and Webflow projects.",
+  name: "Case Studies and Guides",
+  description: "Client projects broken down step by step, plus practical guides on hiring a web developer, budgets and timelines.",
   url: "https://www.nikolamiljkovic.live/blog/",
   mainEntity: {
     "@type": "ItemList",
@@ -56,35 +67,45 @@ const collectionSchema = {
 ---
 
 <BaseLayout
-  title="Web Development Case Studies | Nikola Miljković"
-  description="See how I build pixel-perfect websites for real clients. Detailed case studies with challenges, solutions, and live results from Astro and Webflow projects."
+  title="Case Studies and Web Development Guides | Nikola Miljković"
+  description="Client projects broken down step by step, plus practical guides on hiring a web developer, what a website costs and how long a build actually takes."
   extraSchemas={[breadcrumbSchema, collectionSchema]}
 >
   <Navbar />
   <main id="main-content">
     <section class="blog-hero">
       <div class="blog-hero__inner container">
-        <p class="blog-hero__label" data-fade-up>Case Studies</p>
+        <p class="blog-hero__label" data-fade-up>Case Studies &amp; Guides</p>
         <h1 class="blog-hero__heading" data-fade-up>
-          Projects I've <span class="blog-hero__italic">built</span>
+          Projects I've built, and what I've
+          <span class="blog-hero__italic">learned</span>
         </h1>
         <p class="blog-hero__text" data-fade-up>
-          A closer look at each project — the challenge, the approach, and the
-          result.
+          A closer look at each client project, plus practical guides on hiring,
+          budgets and timelines.
         </p>
       </div>
     </section>
 
     <section class="blog-grid-section">
       <div class="blog-grid-section__inner container">
+        <div class="blog-section-head">
+          <h2 class="blog-section-head__heading" data-fade-up>Case studies</h2>
+          <p class="blog-section-head__text" data-fade-up>
+            Real client projects, with the challenge, the approach and the
+            result.
+          </p>
+        </div>
         <div class="blog-grid" data-stagger>
           {
-            posts.map((post) => (
+            caseStudies.map((post) => (
               <a href={`/blog/${post.slug}`} class="blog-card">
                 {post.entry.coverImage ? (
                   <div class="blog-card__image-wrap">
                     <img
                       src={post.entry.coverImage}
+                      srcset={coverSrcset(post.entry.coverImage)}
+                      sizes={coverSizes}
                       alt={post.entry.title}
                       class="blog-card__image"
                       loading="lazy"
@@ -113,7 +134,7 @@ const collectionSchema = {
                       </time>
                     )}
                   </div>
-                  <h2 class="blog-card__title">{post.entry.title}</h2>
+                  <h3 class="blog-card__title">{post.entry.title}</h3>
                   <p class="blog-card__summary">{post.entry.summary}</p>
                   <span class="blog-card__link">
                     Read case study
@@ -138,6 +159,77 @@ const collectionSchema = {
         </div>
       </div>
     </section>
+
+    {guides.length > 0 && (
+      <section class="blog-grid-section blog-grid-section--guides">
+        <div class="blog-grid-section__inner container">
+          <div class="blog-section-head">
+            <h2 class="blog-section-head__heading" data-fade-up>Guides</h2>
+            <p class="blog-section-head__text" data-fade-up>
+              What clients ask before we start: what a website costs, how long it
+              takes, and who to hire.
+            </p>
+          </div>
+          <div class="blog-grid" data-stagger>
+            {guides.map((post) => (
+              <a href={`/blog/${post.slug}`} class="blog-card">
+                {post.entry.coverImage ? (
+                  <div class="blog-card__image-wrap">
+                    <img
+                      src={post.entry.coverImage}
+                      srcset={coverSrcset(post.entry.coverImage)}
+                      sizes={coverSizes}
+                      alt={post.entry.title}
+                      class="blog-card__image"
+                      loading="lazy"
+                      width="600"
+                      height="340"
+                    />
+                  </div>
+                ) : (
+                  <div class="blog-card__image-wrap blog-card__image-wrap--placeholder">
+                    <span class="blog-card__placeholder-text">
+                      {post.entry.title}
+                    </span>
+                  </div>
+                )}
+                <div class="blog-card__body">
+                  <div class="blog-card__meta">
+                    <span class="blog-card__tag">Guide</span>
+                    {post.entry.publishedDate && (
+                      <time class="blog-card__date">
+                        {new Date(post.entry.publishedDate).toLocaleDateString(
+                          "en-US",
+                          { year: "numeric", month: "short" }
+                        )}
+                      </time>
+                    )}
+                  </div>
+                  <h3 class="blog-card__title">{post.entry.title}</h3>
+                  <p class="blog-card__summary">{post.entry.summary}</p>
+                  <span class="blog-card__link">
+                    Read guide
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
   </main>
   <Footer />
 </BaseLayout>
@@ -192,6 +284,39 @@ const collectionSchema = {
   .blog-grid-section {
     padding-top: 2.5em;
     padding-bottom: var(--section-gap);
+  }
+
+  /* The guides grid follows the case studies grid on the same page, so it only
+     needs the gap between the two, not another full section rhythm on top. */
+  .blog-grid-section--guides {
+    padding-top: 0;
+  }
+
+  .blog-section-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-bottom: 2em;
+    padding-bottom: 1.25em;
+    border-bottom: 1px solid var(--color-primary-10);
+  }
+
+  .blog-section-head__heading {
+    font-family: var(--font-body);
+    font-size: 1.75em;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-primary);
+    margin: 0;
+  }
+
+  .blog-section-head__text {
+    font-family: var(--font-body);
+    font-size: 1em;
+    line-height: 1.5;
+    color: var(--color-primary-60);
+    max-width: 34em;
+    margin: 0;
   }
 
   .blog-grid {
@@ -350,6 +475,14 @@ const collectionSchema = {
 
     .blog-grid {
       grid-template-columns: 1fr;
+    }
+
+    .blog-section-head {
+      margin-bottom: 1.5em;
+    }
+
+    .blog-section-head__heading {
+      font-size: 1.5em;
     }
   }
 
