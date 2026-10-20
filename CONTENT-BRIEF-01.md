@@ -8,6 +8,12 @@
 **Priority:** #1 Quick Win
 **AEO Priority:** Yes
 
+> **Stale figures, do not reuse (noted 2026-10-21).** The dollar amounts below were market research
+> from before the article was written, not Nikola's prices, and they are several times higher than
+> what he actually charges. The published guide and every other page use **$500 to $2,000**, with a
+> one-page site at **$500 to $1,000**. Take pricing from `src/content/posts/web-developer-cost/`,
+> never from this brief.
+
 ---
 
 ## Search Intent

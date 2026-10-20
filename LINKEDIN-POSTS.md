@@ -38,7 +38,7 @@ The site cost less than what he spends on protein powder in two months. But it b
 
 Your website works for you 24/7. Instagram only works when you post.
 
-See the project: nikolamiljkovic.live/blog/comira
+See the project: nikolamiljkovic.live/blog/comira/
 
 ---
 
@@ -48,9 +48,10 @@ See the project: nikolamiljkovic.live/blog/comira
 
 I get this question every week. Here is the honest answer:
 
-A simple one-page site: $800 to $2,000
-A 3-5 page business website: $1,500 to $3,500
-Something more complex with animations and CMS: $3,000 to $5,000
+A simple one-page site: $500 to $1,000
+A 3-5 page business website: $1,000 to $2,000
+A content-rich site with a blog and animations: $1,500 to $2,500
+E-commerce or custom functionality: $2,000 and up
 
 What should always be included in that price:
 - Custom design (not a template)
@@ -63,7 +64,7 @@ What are red flags in a quote:
 - Price under $300 (you will pay twice when it breaks)
 - "Extras" for mobile or SEO (that is not extra, that is standard)
 
-I wrote a full pricing guide on my blog if you want the details: nikolamiljkovic.live/blog/web-developer-cost
+I wrote a full pricing guide on my blog if you want the details: nikolamiljkovic.live/blog/web-developer-cost/
 
 ---
 
