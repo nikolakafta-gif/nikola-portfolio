@@ -204,6 +204,38 @@ Still unknown to Google (2):
 - Next on the calendar: Month 3 Week 1-2, "Do You Need a Custom Website or a Template"
   (Cluster 14, comparison, 1800+ words)
 
+### Phase 05 — Month 3 Week 1-2 (2026-10-21, slot ran two months late)
+- Brief written: `CONTENT-BRIEF-04.md` (Cluster 14, commercial investigation, primary keyword "do i
+  need a custom website or a template", 880/mo, low difficulty)
+- Article written: "Do You Need a Custom Website or a Template?" at `/blog/custom-website-vs-template`
+  — 1,918 words, 8-question FAQ, answer-first intro, all 7 content H2s in question format
+- Differentiators, in order of how much they matter:
+  1. A full section on **when a template is the right choice**, naming the project types I turn away.
+     Same against-my-own-interest move that carried the freelancer vs agency guide.
+  2. **Three year cost comparison with real figures.** Wix $17.77 to $39.77/mo and Squarespace $12 to
+     $36/mo, both checked on the day of writing, against my own one-time $500 to $2,000. Over 36
+     months the two land close together, which neither side of the SERP admits.
+  3. **Google's own words on whether a template can rank**, instead of a developer's assertion. The
+     SERP is agencies claiming templates cannot rank; the starter guide ranks content, not platforms.
+  4. The **AI builder** question, which the older page-one articles predate.
+- Citations verified live on the day of writing: [Google SEO starter guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide)
+  (useful content is called more influential than the guide's own technical items) and
+  [Google page experience](https://developers.google.com/search/docs/appearance/page-experience)
+  ("Core Web Vitals are used by our ranking systems", "There is no single signal"). Third anchor,
+  W3Techs on 2026-10-20: Wix 4.2% and Squarespace 2.4% of all websites.
+- **Porta Brzi Brod and Zvonačka Banja are linked on purpose.** Both fell out of the index in late
+  September and Porta had the fewest inbound internal links on the site. They are also the honest
+  examples for this topic, a bilingual structured menu and an image-heavy tourism site.
+- Cannibalisation fixed: the "Custom design vs. template" paragraph in `web-developer-cost` and the
+  closing paragraph of `casera` now point here. The Casera FAQ was left alone because FAQ answers
+  render as plain text, so a markdown link there would print as source.
+- Verified locally: Article + BreadcrumbList + FAQPage, 8 FAQ items, title 62 chars, meta description
+  150, canonical with the trailing slash, 8 internal links all slashed, 2 external, cover set to the
+  shared `guide-blog.webp`, related posts correctly stay inside the guides, `npm run build` passes,
+  sitemap entry carries the real publish date.
+- Next on the calendar: Month 3 Week 3-4, "How to Prepare for a Website Redesign: Complete Guide"
+  (Cluster 5, planning guide, 2000+ words)
+
 ### Trailing slash cleanup (2026-10-21)
 
 GSC Page indexing on 2026-10-12 read **12 indexed, 7 not indexed, 19 known pages**. The site only has
