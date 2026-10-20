@@ -99,7 +99,7 @@ const collectionSchema = {
         <div class="blog-grid" data-stagger>
           {
             caseStudies.map((post) => (
-              <a href={`/blog/${post.slug}`} class="blog-card">
+              <a href={`/blog/${post.slug}/`} class="blog-card">
                 {post.entry.coverImage ? (
                   <div class="blog-card__image-wrap">
                     <img
@@ -172,7 +172,7 @@ const collectionSchema = {
           </div>
           <div class="blog-grid" data-stagger>
             {guides.map((post) => (
-              <a href={`/blog/${post.slug}`} class="blog-card">
+              <a href={`/blog/${post.slug}/`} class="blog-card">
                 {post.entry.coverImage ? (
                   <div class="blog-card__image-wrap">
                     <img

@@ -138,7 +138,7 @@ function metaDescription(text: string, maxLength = 155) {
     <article class="case-study">
       <header class="case-study__header">
         <div class={`case-study__header-inner container${!isCaseStudy ? ' is-article' : ''}`}>
-          <a href="/blog" class="case-study__back" data-fade-up>
+          <a href="/blog/" class="case-study__back" data-fade-up>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="m12 19-7-7 7-7" />
               <path d="M19 12H5" />
@@ -255,7 +255,7 @@ function metaDescription(text: string, maxLength = 155) {
           <h2 class="related__heading">{isCaseStudy ? 'More case studies' : 'More articles'}</h2>
           <div class="related__grid">
             {relatedPosts.map((rp) => (
-              <a href={`/blog/${rp.slug}`} class="related__card">
+              <a href={`/blog/${rp.slug}/`} class="related__card">
                 <div class="related__image-wrap">
                   {rp.entry.coverImage ? (
                     <img

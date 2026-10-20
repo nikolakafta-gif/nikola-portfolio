@@ -204,6 +204,38 @@ Still unknown to Google (2):
 - Next on the calendar: Month 3 Week 1-2, "Do You Need a Custom Website or a Template"
   (Cluster 14, comparison, 1800+ words)
 
+### Trailing slash cleanup (2026-10-21)
+
+GSC Page indexing on 2026-10-12 read **12 indexed, 7 not indexed, 19 known pages**. The site only has
+15 real URLs, and the numbers reconcile exactly:
+
+- 4 "Alternate page with proper canonical tag" = the slashless twin of 4 real pages. Not an error,
+  Google honoured the canonical, but it is crawl budget spent on duplicates.
+- 2 "Crawled, currently not indexed" and 1 "Discovered, currently not indexed" = 3 of the 15 sitemap
+  URLs. 12 + 3 = 15.
+
+Cause: the canonical and the sitemap carry a trailing slash, but `/blog/x` answered **200** (not a
+redirect) with a canonical pointing at `/blog/x/`, and every internal link in the content and on the
+blog cards was written slashless. Google followed those links and filed each twin as an alternate.
+The grey band in the GSC chart steps up on 2026-08-13 and again in late September, matching the two
+rounds of internal links we added.
+
+Fixed:
+- `trailingSlash: 'always'` in `astro.config.mjs`. The Vercel adapter turns this into a **308** from
+  `/x` to `/x/` in `.vercel/output/config.json`, so the duplicate stops being a page at all. A rule
+  instead of a hint. Note the dev server now 404s on a slashless URL, which is the intended warning.
+- 58 internal links rewritten with the trailing slash: 36 markdown links to posts, 4 to `/contact`,
+  6 href attributes, 9 href properties (Navbar, the 8 Work slider cards), 3 template literals (blog
+  cards and related cards).
+- Verified: no slashless `/blog` or `/contact` link left in any built HTML file, sitemap still 15 URLs
+  all with the slash, build passes, dev server clean after a restart.
+
+Do not write an internal link without the trailing slash again, in content or in components.
+
+**Still the real problem, unchanged since August:** the 2 pages Google crawled and declined are an
+authority call, not a markup fault. Only external links move that. Which 3 URLs they are can be read
+from the GSC reason rows, or from `node .claude/scripts/google-index-status.cjs`.
+
 ### Lighthouse remediation (2026-07-26)
 Baseline: Performance 75, Accessibility 91, Best Practices 96, SEO 100, Agentic Browsing 1/3.
 - A11y: mobile menu used `aria-hidden="true"` while its links stayed keyboard-focusable — switched to `inert` (toggled in Navbar.astro's open/close handlers). Do not revert to aria-hidden.

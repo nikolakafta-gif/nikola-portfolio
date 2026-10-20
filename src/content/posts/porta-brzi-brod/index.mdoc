@@ -62,7 +62,7 @@ Most restaurant sites hide the menu behind a PDF link. It is the single most com
 
 Here the menu is real markup with `Menu`, `MenuSection`, and `MenuItem` structured data, with prices attached as offers. That means a search engine can understand that this restaurant serves ćevapi at a specific price, in a way it never could from a PDF. The same approach applies to the rest of the site: `Restaurant` schema with the address and coordinates, `OpeningHoursSpecification` for each day group, and `FAQPage` markup on the questions.
 
-This is the same technical SEO foundation I apply to every build, and it is a big part of what separates a site that gets found from one that just exists. I go deeper on how to evaluate that kind of work in my [guide to what to look for in a web developer](/blog/what-to-look-for-in-a-web-developer).
+This is the same technical SEO foundation I apply to every build, and it is a big part of what separates a site that gets found from one that just exists. I go deeper on how to evaluate that kind of work in my [guide to what to look for in a web developer](/blog/what-to-look-for-in-a-web-developer/).
 
 ## Why build it in two languages?
 
@@ -82,7 +82,7 @@ The copy is written in a southern Serbian register rather than neutral marketing
 
 ## What was the tech stack?
 
-The site is built with [Astro](/blog/web-developer-cost), which ships almost no JavaScript, so pages load close to instantly even on a phone on mobile data outside the restaurant. Photography is served as WebP at multiple sizes. GSAP handles the scroll reveals and Lenis the smooth scrolling, the same restrained approach I took on [Zvonačka Banja](/blog/zvonacka-banja) and [Casera](/blog/casera).
+The site is built with [Astro](/blog/web-developer-cost/), which ships almost no JavaScript, so pages load close to instantly even on a phone on mobile data outside the restaurant. Photography is served as WebP at multiple sizes. GSAP handles the scroll reveals and Lenis the smooth scrolling, the same restrained approach I took on [Zvonačka Banja](/blog/zvonacka-banja/) and [Casera](/blog/casera/).
 
 Everything the restaurant might need to change, the address, phone number, hours, menu items and prices, lives in a small set of data files rather than being scattered through templates. Updating a price is one edit in one place, and it propagates to the page, the schema markup, and both languages at once.
 
