@@ -125,10 +125,22 @@ function metaDescription(text: string, maxLength = 155) {
   const truncated = text.slice(0, maxLength + 1);
   return truncated.slice(0, truncated.lastIndexOf(" ")).replace(/[,.;:]+$/, "") + "…";
 }
+
+/*
+ * The name suffix is dropped only when that alone brings the title inside the
+ * 60 character window search results show. Titles too long either way keep it,
+ * since losing the brand would not stop them being truncated.
+ */
+const TITLE_MAX = 60;
+const brandedTitle = `${entry.title} | Nikola Miljković`;
+const pageTitle =
+  brandedTitle.length > TITLE_MAX && entry.title.length <= TITLE_MAX
+    ? entry.title
+    : brandedTitle;
 ---
 
 <BaseLayout
-  title={`${entry.title} | Nikola Miljković`}
+  title={pageTitle}
   description={metaDescription(entry.summary || entry.title)}
   schema={articleSchema}
   extraSchemas={[breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}

@@ -61,22 +61,32 @@ const contactSchema = {
   <Navbar />
   <main id="main-content">
     <section class="contact-body">
-      {/* Kept for search engines and screen readers: the page is otherwise a
-          single embedded iframe with no heading of its own. */}
-      <h1 class="sr-only">Book a call with Nikola Miljković</h1>
-
       <div class="contact-body__inner container">
+        {/* Server-rendered so the page says what the call is even before, or
+            without, the Cal.com iframe loading. */}
+        <header class="contact-intro">
+          <h1 class="contact-intro__title">Book a free 30-minute call</h1>
+          <p class="contact-intro__text">
+            You talk to me directly, not a sales team. We go through your project,
+            scope and budget, and after the call I send you a proposal and timeline.
+          </p>
+          <p class="contact-intro__price">
+            Most sites land between $500 and $2,500.
+            <a href="/blog/web-developer-cost/">See what moves the price</a>.
+          </p>
+        </header>
+
         <!-- Cal.com renders into this. Height is reserved up front so the
              calendar arriving does not shove the footer down (CLS). -->
         <div class="cal-embed" id="cal-embed" data-cal-link={CAL_LINK}>
           <p class="cal-embed__fallback">Loading the calendar…</p>
         </div>
 
-        <p class="contact-body__alt">
-          Prefer not to book a call? Email me at
-          <a href="mailto:n.miljkovic1987@outlook.com">n.miljkovic1987@outlook.com</a>
-          or message me on WhatsApp, Viber or Telegram.
-        </p>
+        <div class="contact-body__alt">
+          <p>None of the times work, or you would rather write?</p>
+          <a class="contact-body__email" href="mailto:n.miljkovic1987@outlook.com">Email me your project</a>
+          <p>I also answer on WhatsApp, Viber and Telegram.</p>
+        </div>
       </div>
     </section>
   </main>
@@ -189,6 +199,41 @@ const contactSchema = {
     max-width: 1272px;
   }
 
+  .contact-intro {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 2.5em;
+  }
+
+  .contact-intro__title {
+    font-family: var(--font-body);
+    color: var(--color-primary);
+    font-size: 3em;
+    font-weight: 500;
+    line-height: 1.2;
+    margin: 0 0 0.5em;
+  }
+
+  .contact-intro__text,
+  .contact-intro__price {
+    font-family: var(--font-body);
+    color: var(--color-primary-60);
+    font-size: 1.125em;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .contact-intro__price {
+    margin-top: 0.75em;
+    font-size: 1em;
+  }
+
+  .contact-intro__price a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
   .cal-embed {
     /* Reserved before the embed arrives, so nothing below it jumps */
     min-height: 40em;
@@ -228,16 +273,29 @@ const contactSchema = {
     max-width: 550px;
   }
 
-  .contact-body__alt a {
-    color: var(--color-primary);
-    text-decoration: underline;
-    text-underline-offset: 0.2em;
+  .contact-body__alt p {
+    margin: 0;
+  }
+
+  .contact-body__email {
+    display: inline-block;
+    margin: 0.75em 0;
+    padding: 0.75em 1.5em;
+    border-radius: 999px;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: 500;
+    text-decoration: none;
   }
 
   /* Tablet */
   @media (max-width: 991px) {
     .contact-body {
       padding-top: 8.5em;
+    }
+
+    .contact-intro__title {
+      font-size: 2.25em;
     }
   }
 

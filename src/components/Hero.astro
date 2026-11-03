@@ -12,7 +12,8 @@ import ButtonExpand from "./ButtonExpand.astro";
     </h1>
     <p class="hero__text" data-hero-text>I'm Nikola, a freelance web developer based in Niš, Serbia, working with small businesses and startups worldwide. I build fast, custom websites in Webflow and Astro, from a single landing page to a full redesign, and I stay hands on from the first wireframe to launch.</p>
     <div class="hero__actions" data-hero-actions>
-      <ButtonExpand href="/contact/" label="Get Started" variant="accent" />
+      <ButtonExpand href="/contact/" label="Book a free call" variant="accent" />
+      <p class="hero__note">30 minutes with me directly. Websites from $500, proposal and timeline after the call.</p>
     </div>
   </div>
 </section>
@@ -192,12 +193,19 @@ import ButtonExpand from "./ButtonExpand.astro";
 
   .hero__actions {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 2em;
+    gap: 0.875em;
     margin-top: 2em;
     opacity: 0;
+  }
+
+  .hero__note {
+    color: var(--color-primary-60);
+    font-size: 0.875em;
+    line-height: 1.4;
+    margin: 0;
   }
 
   /* Short desktop windows (1366x768 laptops, browsers at 125% zoom) get a

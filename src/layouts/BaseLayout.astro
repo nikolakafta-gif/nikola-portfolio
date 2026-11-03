@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import "../styles/tailwind.css";
+import CookieBanner from "../components/CookieBanner.astro";
 
 interface Props {
   title?: string;
@@ -118,6 +119,19 @@ const pageSchema = schema || defaultSchema;
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
+      /*
+       * Consent Mode v2. Analytics storage is denied until the visitor accepts
+       * in the cookie banner, so GA sends cookieless pings only. A choice made
+       * on an earlier visit is restored here, before the config call.
+       */
+      var consent = null;
+      try { consent = localStorage.getItem('cookie-consent'); } catch (e) {}
+      gtag('consent', 'default', {
+        analytics_storage: consent === 'granted' ? 'granted' : 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
       gtag('js', new Date());
       gtag('config', 'G-9HHYCK1DJM');
       (function(){
@@ -148,6 +162,7 @@ const pageSchema = schema || defaultSchema;
   <body>
     <a href="#main-content" class="skip-to-content">Skip to content</a>
     <slot />
+    <CookieBanner />
 
     <script>
       import Lenis from "lenis";

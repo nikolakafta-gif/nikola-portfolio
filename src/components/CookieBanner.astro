@@ -1,0 +1,109 @@
+<div class="cookie-banner" data-cookie-banner role="region" aria-label="Cookie consent" hidden>
+  <p class="cookie-banner__text">
+    I use Google Analytics to see which pages help visitors. No ads, no tracking across sites.
+  </p>
+  <div class="cookie-banner__actions">
+    <button type="button" class="cookie-banner__btn" data-cookie-choice="denied">Decline</button>
+    <button type="button" class="cookie-banner__btn cookie-banner__btn--accept" data-cookie-choice="granted">Accept</button>
+  </div>
+</div>
+
+<script>
+  /*
+   * The consent default is set inline in BaseLayout's head, before GA loads.
+   * This only shows the banner when no choice is stored yet, and pushes the
+   * visitor's answer to Consent Mode.
+   */
+  const KEY = "cookie-consent";
+
+  function initCookieBanner() {
+    const banner = document.querySelector<HTMLElement>("[data-cookie-banner]");
+    if (!banner || banner.dataset.ready) return;
+    banner.dataset.ready = "true";
+
+    let stored: string | null = null;
+    try { stored = localStorage.getItem(KEY); } catch {}
+    if (stored === "granted" || stored === "denied") return;
+
+    banner.hidden = false;
+
+    banner.querySelectorAll<HTMLButtonElement>("[data-cookie-choice]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const choice = btn.dataset.cookieChoice as "granted" | "denied";
+        try { localStorage.setItem(KEY, choice); } catch {}
+        const gtag = (window as any).gtag;
+        if (typeof gtag === "function") {
+          gtag("consent", "update", { analytics_storage: choice });
+        }
+        banner.hidden = true;
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCookieBanner);
+  } else {
+    initCookieBanner();
+  }
+</script>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: 1.5em;
+    bottom: 1.5em;
+    z-index: 70;
+    max-width: 22em;
+    padding: 1.25em;
+    border: 1px solid var(--color-primary-10);
+    border-radius: 1em;
+    background-color: var(--color-white);
+    box-shadow: 0 8px 24px rgba(27, 29, 30, 0.12);
+    font-family: var(--font-body);
+  }
+
+  .cookie-banner[hidden] {
+    display: none;
+  }
+
+  .cookie-banner__text {
+    color: var(--color-primary-60);
+    font-size: 0.875em;
+    line-height: 1.5;
+    margin: 0 0 1em;
+  }
+
+  .cookie-banner__actions {
+    display: flex;
+    gap: 0.5em;
+  }
+
+  .cookie-banner__btn {
+    flex: 1;
+    padding: 0.625em 1em;
+    border: 1px solid var(--color-primary-10);
+    border-radius: 999px;
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    font: inherit;
+    font-size: 0.875em;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .cookie-banner__btn--accept {
+    border-color: var(--color-primary);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  /* Leaves room on the right for the contact button */
+  @media (max-width: 767px) {
+    .cookie-banner {
+      left: 1em;
+      right: 5em;
+      bottom: 1em;
+      max-width: none;
+    }
+  }
+</style>
