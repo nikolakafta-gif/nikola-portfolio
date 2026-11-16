@@ -146,7 +146,7 @@ const pageTitle =
   extraSchemas={[breadcrumbSchema, ...(faqSchema ? [faqSchema] : [])]}
 >
   <Navbar />
-  <main id="main-content">
+  <main id="main-content" class:list={{ "is-case-study": isCaseStudy }}>
     <article class="case-study">
       <header class="case-study__header">
         <div class={`case-study__header-inner container${!isCaseStudy ? ' is-article' : ''}`}>
@@ -227,7 +227,7 @@ const pageTitle =
             <img
               src={entry.coverImage}
               srcset={coverSrcset(entry.coverImage)}
-              sizes="(max-width: 767px) 92vw, 1120px"
+              sizes="(max-width: 767px) 92vw, 880px"
               alt={isCaseStudy ? `${entry.title} project screenshot` : entry.title}
               class="case-study__cover-image"
               loading="lazy"
@@ -418,6 +418,14 @@ const pageTitle =
     padding-bottom: 2.5em;
   }
 
+  /*
+   * Capped close to the 800px text column. Stretched to the full container the
+   * covers were upscaled past their source size and went soft.
+   */
+  .case-study__cover-inner {
+    max-width: 880px;
+  }
+
   .case-study__cover-image {
     width: 100%;
     border-radius: 1em;
@@ -431,6 +439,29 @@ const pageTitle =
   }
 
   .case-study__content-inner {
+    max-width: 800px;
+  }
+
+  /*
+   * Case studies read left aligned with the header instead of as a centred
+   * column: every section keeps the full container, and only its content is
+   * capped, so the image, text, FAQ and related cards all start at the same
+   * left edge as the title.
+   */
+  .is-case-study .case-study__cover-inner,
+  .is-case-study .case-study__content-inner,
+  .is-case-study .faq__inner,
+  .is-case-study .related__inner {
+    max-width: var(--size-container);
+  }
+
+  .is-case-study .case-study__cover-image {
+    max-width: 880px;
+  }
+
+  .is-case-study .prose,
+  .is-case-study .faq__inner > *,
+  .is-case-study .related__inner > * {
     max-width: 800px;
   }
 
